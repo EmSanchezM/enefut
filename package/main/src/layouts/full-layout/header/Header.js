@@ -16,7 +16,6 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 // Dropdown Component
-import CartDropdown from './CartDropdown';
 import MessageDropdown from './MessageDropdown';
 import NotificationDropdown from './NotificationDropdown';
 import ProfileDropdown from './ProfileDropdown';
@@ -156,9 +155,6 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
         {/* ------------------------------------------- */}
         {/* Ecommerce Dropdown */}
         {/* ------------------------------------------- */}
-        <IconButton size="large" color="inherit" onClick={() => setShowDrawer(true)}>
-          <FeatherIcon icon="shopping-cart" width="20" height="20" />
-        </IconButton>
         <Drawer
           anchor="right"
           open={showDrawer}
@@ -194,8 +190,6 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
             </Box>
           </Box>
 
-          {/* component */}
-          <CartDropdown />
         </Drawer>
         {/* ------------------------------------------- */}
         {/* End Ecommerce Dropdown */}
@@ -418,7 +412,7 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
               }}
             >
               <Typography color="textSecondary" variant="h5" fontWeight="400" sx={{ ml: 1 }}>
-                Hi,
+                Hola,
               </Typography>
               <Typography
                 variant="h5"
@@ -427,7 +421,7 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
                   ml: 1,
                 }}
               >
-                Julia
+                Toro
               </Typography>
               <FeatherIcon icon="chevron-down" width="20" height="20" />
             </Box>
@@ -457,7 +451,7 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
           >
             <Box display="flex" alignItems="center">
               <Typography variant="h4" fontWeight="500">
-                User Profile
+                Perfil
               </Typography>
             </Box>
           </Box>

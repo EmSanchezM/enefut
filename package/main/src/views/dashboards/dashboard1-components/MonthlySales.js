@@ -50,7 +50,7 @@ const MonthlySales = () => {
   };
   const seriesmonthlychart = [
     {
-      name: 'Monthly Sales',
+      name: 'Asignaciones',
       data: [35, 60, 30, 55, 40],
     },
   ];
@@ -78,7 +78,7 @@ const MonthlySales = () => {
               }}
               gutterBottom
             >
-              Monthly Sales
+              Asignaciones
             </Typography>
             <Typography
               variant="h2"
@@ -106,7 +106,7 @@ const MonthlySales = () => {
                 boxShadow: 'none',
               }}
             >
-              <FeatherIcon icon="shopping-bag" />
+              <FeatherIcon icon="book" />
             </Fab>
           </Box>
         </Box>

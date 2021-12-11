@@ -19,13 +19,13 @@ import {
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
 
-import img1 from '../../assets/images/products/s1.jpg';
-import img2 from '../../assets/images/products/s2.jpg';
-import img3 from '../../assets/images/products/s3.jpg';
-import img4 from '../../assets/images/products/s4.jpg';
+import img1 from '../../assets/images/users/1.jpg';
+import img2 from '../../assets/images/users/2.jpg';
+import img3 from '../../assets/images/users/3.jpg';
+import img4 from '../../assets/images/users/4.jpg';
 
 const columns = [
-  { id: 'pname', label: 'Products', minWidth: 170 },
+  { id: 'pname', label: 'Pago', minWidth: 170 },
   { id: 'review', label: 'Review', minWidth: 100 },
   {
     id: 'earnings',
@@ -84,17 +84,17 @@ const BCrumb = [
     title: 'ENEFUT',
   },
   {
-    title: 'Fixed Header Table',
+    title: 'Pagos',
   },
 ];
 
-const FixedHeaderTable = () => {
+const PagosTable = () => {
   const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
   return (
-    <PageContainer title="Fixed Header Table" description="this is Fixed Header Table page">
+    <PageContainer title="Pagos" description="Pagos de estudiantes">
       {/* breadcrumb */}
-      <Breadcrumb title="Fixed Header Table" items={BCrumb} />
+      <Breadcrumb title="Listado de Pagos" items={BCrumb} />
       {/* end breadcrumb */}
       <Card>
         <CardContent>
@@ -224,4 +224,4 @@ const FixedHeaderTable = () => {
   );
 };
 
-export default FixedHeaderTable;
+export default PagosTable;

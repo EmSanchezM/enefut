@@ -13,8 +13,7 @@ const ResetPassword = lazy(() => import('../views/authentication/ResetPassword')
 
 /* ****Pages***** */
 const Dashboard1 = lazy(() => import('../views/dashboards/Dashboard1'));
-const Dashboard2 = lazy(() => import('../views/dashboards/Dashboard2'));
-const Dashboard3 = lazy(() => import('../views/dashboards/Dashboard3'));
+
 
 /* ****Apps***** */
 const Chats = lazy(() => import('../views/apps/chats/Chats'));
@@ -29,12 +28,22 @@ const CustomTypography = lazy(() => import('../views/typography/CustomTypography
 const Calendar = lazy(() => import('../views/apps/calendar/ACalendar'));
 const CustomerEdit = lazy(() => import('../views/apps/customers/CustomerEdit'));
 const CustomerLists = lazy(() => import('../views/apps/customers/CustomerLists'));
+
 /* ****Tables***** */
 const BasicTable = lazy(() => import('../views/tables/BasicTable'));
 const PaginationTable = lazy(() => import('../views/tables/PaginationTable'));
 const EnhancedTable = lazy(() => import('../views/tables/EnhancedTable'));
 const CollapsibleTable = lazy(() => import('../views/tables/CollapsibleTable'));
 const FixedHeaderTable = lazy(() => import('../views/tables/FixedHeaderTable'));
+
+/** Utiles ya */
+const PracticasTable = lazy(() => import('../views/tables/PracticasTable'));
+const CalificacionTable = lazy(() => import('../views/tables/CalificacionTable'));
+const DocumentoTable = lazy(() => import('../views/tables/DocumentoTable'));
+const InstructorTable = lazy(() => import('../views/tables/InstructorTable'));
+const MatriculaTable = lazy(() => import('../views/tables/MatriculaTable'));
+const PagosTable = lazy(() => import('../views/tables/PagosTable'));
+const AsistenciaTable = lazy(() => import('../views/tables/AsistenciaTable'));
 
 // form elements
 const ExAutoComplete = lazy(() => import('../views/form-elements/ExAutoComplete'));
@@ -72,6 +81,12 @@ const ReactIcons = lazy(() => import('../views/icons/ReactIcons'));
 // Alert
 const ExAlert = lazy(() => import('../views/alert/ExAlert'));
 
+/**
+ * const Dashboard2 = lazy(() => import('../views/dashboards/Dashboard2'));
+ * const Dashboard3 = lazy(() => import('../views/dashboards/Dashboard3'));
+ * { path: '/dashboards/dashboard2', exact: true, element: <Dashboard2 /> },
+    { path: '/dashboards/dashboard3', exact: true, element: <Dashboard3 /> },
+ */
 /* ****Routes***** */
 
 const Router = [
@@ -81,8 +96,7 @@ const Router = [
     children: [
       { path: '/', element: <Navigate to="/dashboards/dashboard1" /> },
       { path: '/dashboards/dashboard1', exact: true, element: <Dashboard1 /> },
-      { path: '/dashboards/dashboard2', exact: true, element: <Dashboard2 /> },
-      { path: '/dashboards/dashboard3', exact: true, element: <Dashboard3 /> },
+      
       { path: '/customers/lists', exact: true, element: <CustomerLists /> },
       { path: '/chats', element: <Chats /> },
       { path: '/notes', element: <Notes /> },
@@ -95,6 +109,15 @@ const Router = [
       { path: '/tables/enhanced-table', element: <EnhancedTable /> },
       { path: '/tables/collapsible-table', element: <CollapsibleTable /> },
       { path: '/tables/fixed-header-table', element: <FixedHeaderTable /> },
+
+      { path: '/practicas', element: <PracticasTable /> },
+      { path: '/calificaciones', element: <CalificacionTable /> },
+      { path: '/matriculas', element: <MatriculaTable /> },
+      { path: '/documentos', element: <DocumentoTable /> },
+      { path: '/instructores', element: <InstructorTable /> },
+      { path: '/pagos', element: <PagosTable /> },
+      { path: '/asistencias', element: <AsistenciaTable /> },
+
       { path: '/form-layouts/form-layouts', element: <FormLayouts /> },
       { path: '/form-elements/autocomplete', element: <ExAutoComplete /> },
       { path: '/form-elements/button', element: <ExButton /> },

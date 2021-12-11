@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Button, Typography } from '@mui/material';
+import { Card, CardContent, Typography } from '@mui/material';
 import imgsvg from '../../../assets/images/backgrounds/welcome-bg2-2x-svg.svg';
 
 const WelcomeCard = () => (
@@ -36,17 +36,8 @@ const WelcomeCard = () => (
         variant="h3"
         gutterBottom
       >
-        Hey Julia, <br /> Download Latest Report
+        Hola, <br /> Bienvenidos a ENEFUT
       </Typography>
-      <Button
-        sx={{
-          marginTop: '15px',
-        }}
-        variant="contained"
-        color="primary"
-      >
-        Download
-      </Button>
     </CardContent>
   </Card>
 );

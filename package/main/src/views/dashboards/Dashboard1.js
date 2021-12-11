@@ -2,14 +2,9 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import {
   WelcomeCard,
-  BlogCard,
   Earnings,
   MonthlySales,
-  SalesOverview,
-  TotalSales,
-  ProductPerformance,
-  WeeklyStats,
-  DailyActivities,
+  SalesOverview
 } from './dashboard1-components';
 
 import PageContainer from '../../components/container/PageContainer';
@@ -36,21 +31,16 @@ const Dashboard1 = () => (
       </Grid>
       {/* ------------------------- row 2 ------------------------- */}
       <Grid item xs={12} lg={4}>
-        <TotalSales />
+        <Earnings />
       </Grid>
-      <Grid item xs={12} lg={8}>
-        <ProductPerformance />
+      <Grid item xs={12} lg={4}>
+        <Earnings />
+      </Grid>
+      <Grid item xs={12} lg={4}>
+        <Earnings />
       </Grid>
       {/* ------------------------- row 3 ------------------------- */}
-      <Grid item xs={12} lg={4}>
-        <BlogCard />
-      </Grid>
-      <Grid item xs={12} lg={4}>
-        <WeeklyStats />
-      </Grid>
-      <Grid item xs={12} lg={4}>
-        <DailyActivities />
-      </Grid>
+      
     </Grid>
   </PageContainer>
 );

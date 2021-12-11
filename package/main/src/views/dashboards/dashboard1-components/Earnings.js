@@ -19,7 +19,7 @@ const Earnings = () => (
           }}
           gutterBottom
         >
-          Earnings
+          Licencias
         </Typography>
         <Box
           sx={{
@@ -35,7 +35,7 @@ const Earnings = () => (
               boxShadow: 'none',
             }}
           >
-            <FeatherIcon icon="dollar-sign" />
+            <FeatherIcon icon="book-open" />
           </Fab>
         </Box>
       </Box>
@@ -48,7 +48,7 @@ const Earnings = () => (
         }}
         gutterBottom
       >
-        $93,438.78
+        8
       </Typography>
       <Typography
         variant="h6"
@@ -59,7 +59,7 @@ const Earnings = () => (
         }}
         gutterBottom
       >
-        Monthly Revenue
+        Control de Licencias
       </Typography>
     </CardContent>
   </Card>

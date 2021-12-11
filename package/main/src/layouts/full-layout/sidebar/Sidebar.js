@@ -17,7 +17,6 @@ import FeatherIcon from 'feather-icons-react';
 import { SidebarWidth } from '../../../assets/global/Theme-variable';
 import LogoIcon from '../logo/LogoIcon';
 import Menuitems from './Menuitems';
-import Buynow from './Buynow';
 import Scrollbar from '../../../components/custom-scroll/Scrollbar';
 
 const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
@@ -159,7 +158,6 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
             })}
           </List>
         </Box>
-        <Buynow />
       </Box>
     </Scrollbar>
   );

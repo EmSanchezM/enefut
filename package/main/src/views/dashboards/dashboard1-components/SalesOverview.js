@@ -88,7 +88,7 @@ const SalesOverview = () => {
   ];
   return (
     <DashboardCard
-      title="Sales Overview"
+      title="Pagos de Matricula"
       subtitle="Ample Admin Vs Pixel Admin"
       customdisplay="block"
       action={
@@ -133,7 +133,7 @@ const SalesOverview = () => {
             >
               <FeatherIcon icon="circle" width="10" height="10" />
             </Typography>
-            Pixel Admin
+            Administracion
           </Typography>
         </Stack>
       }
