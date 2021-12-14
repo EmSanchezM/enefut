@@ -24,7 +24,7 @@ const Menuitems = [
       {
         title: 'Edit',
         icon: 'edit',
-        href: '/customers/edit',
+        href: '/form-layouts/form-layouts',
       },
     ],
   },
@@ -42,7 +42,7 @@ const Menuitems = [
       {
         title: 'Detalle',
         icon: 'file-text',
-        href: '/shop/shop-detail',
+        href: '/form-layouts/form-custom',
       },
     ],
   },
@@ -60,7 +60,7 @@ const Menuitems = [
       {
         title: 'Detalle',
         icon: 'file-text',
-        href: '/shop/shop-detail',
+        href: '/form-layouts/form-wizard',
       },
     ],
   },

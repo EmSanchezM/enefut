@@ -26,15 +26,25 @@ import img4 from '../../assets/images/users/4.jpg';
 
 const columns = [
   { id: 'pname', label: 'Practica', minWidth: 170 },
-  { id: 'review', label: 'Review', minWidth: 100 },
+  { id: 'review', label: 'Licencia', minWidth: 100 },
   {
-    id: 'earnings',
-    label: 'Earnings',
+    id: 'description',
+    label: 'Descripcion',
+    minWidth: 170,
+  },
+  {
+    id: 'status',
+    label: 'Estados',
+    minWidth: 170,
+  },
+  {
+    id: 'dates',
+    label: 'Fecha',
     minWidth: 170,
   },
   {
     id: 'action',
-    label: 'Action',
+    label: 'Acciones',
     minWidth: 170,
   },
 ];
@@ -47,7 +57,10 @@ const rows = [
     tags: 'Ice-Cream, Milk, Powder',
     review: 'good',
     percent: 65,
-    earnings: '546,000',
+    description: 'lorem lorem lorem',
+    licencia: 'A',
+    status: 'Activo',
+    dates: '2021-12-11'
   },
   {
     id: 2,
@@ -56,7 +69,10 @@ const rows = [
     tags: 'Market, Mall',
     review: 'excellent',
     percent: 98,
-    earnings: '780,000',
+    description: 'lorem lorem lorem',
+    licencia: 'A',
+    status: 'Activo',
+    dates: '2021-12-11'
   },
   {
     id: 3,
@@ -65,7 +81,10 @@ const rows = [
     tags: 'Chocolate, Yummy',
     review: 'average',
     percent: 46,
-    earnings: '457,000',
+    description: 'lorem lorem lorem',
+    licencia: 'A',
+    status: 'Activo',
+    dates: '2021-12-11'
   },
   {
     id: 4,
@@ -74,7 +93,10 @@ const rows = [
     tags: 'Elecric, Wire, Current',
     review: 'poor',
     percent: 23,
-    earnings: '125,000',
+    description: 'lorem lorem lorem',
+    licencia: 'A',
+    status: 'Activo',
+    dates: '2021-12-11'
   },
 ];
 
@@ -191,14 +213,26 @@ const PracticasTable = () => {
                             whiteSpace: 'nowrap',
                           }}
                         >
-                          {row.percent}% sold
+                          {row.status}
                         </Typography>
                       </TableCell>
                       <TableCell>
                         <Typography color="textSecondary" variant="h6">
-                          Earnings
+                          Licencia
                         </Typography>
-                        <Typography variant="h5">${row.earnings}</Typography>
+                        <Typography variant="h5">{row.licencia}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography color="textSecondary" variant="h6">
+                          Descripcion
+                        </Typography>
+                        <Typography variant="h5">{row.description}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography color="textSecondary" variant="h6">
+                          Fecha
+                        </Typography>
+                        <Typography variant="h5">{row.dates}</Typography>
                       </TableCell>
                       <TableCell>
                         <IconButton>
