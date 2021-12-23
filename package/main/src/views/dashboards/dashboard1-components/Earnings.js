@@ -59,7 +59,7 @@ const Earnings = () => (
         }}
         gutterBottom
       >
-        Control de Licencias
+        Control de Avisos
       </Typography>
     </CardContent>
   </Card>

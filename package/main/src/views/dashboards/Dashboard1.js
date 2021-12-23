@@ -12,7 +12,7 @@ import PageContainer from '../../components/container/PageContainer';
 const Dashboard1 = () => (
   // 2
 
-  <PageContainer title="Analytical Dashboard" description="this is Analytical Dashboard">
+  <PageContainer title="Estadisticas" description="Estadisticas">
     <Grid container spacing={0}>
       {/* ------------------------- row 1 ------------------------- */}
       <Grid item xs={12} lg={6}>

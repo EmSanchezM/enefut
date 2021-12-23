@@ -19,17 +19,16 @@ import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
 
 const columns = [
-  { id: 'class', label: 'Clase', minWidth: 170 },
-  { id: 'teacher', label: 'Maestro', minWidth: 100 },
-  { id: 'student', label: 'Estudiante', minWidth: 100 },
-  { id: 'name', label: 'Practica', minWidth: 100 },
+  { id: 'pname', label: 'Licencia', minWidth: 170 },
+  { id: 'letter', label: 'Letra', minWidth: 100 },
   { id: 'description', label: 'Descripcion', minWidth: 170 },
-  { id: 'value', label: 'Valor', minWidth: 100 },
-  { id: 'delivery_date', label: 'Fecha', minWidth: 100 },
+  { id: 'duration', label: 'Duracion', minWidth: 100 },
+  { id: 'cost', label: 'Costo', minWidth: 100 },
+  { id: 'language', label: 'Lenguaje', minWidth: 100 },
   { id: 'type', label: 'Tipo', minWidth: 100 },
   {
     id: 'action',
-    label: 'Acciones',
+    label: 'Accion',
     minWidth: 170,
   },
 ];
@@ -37,47 +36,43 @@ const columns = [
 const rows = [
   {
     id: 1,
-    class: 'Is it good butterscotch ice-cream?',
-    teacher: 'Milk, Powder',
-    student: 'Frank, Tower',
-    name: 'Dominio',
-    description: 'Supreme fresh tomato available',
-    value: '20%',
-    deliveryDate: '2021-12-11',
-    type: 'A'
+    name: 'Mike Twith',
+    letter: 'A',
+    description: 'good',
+    duration: '2021-12-02',
+    cost: 1500,
+    languague: 'Español',
+    type: 'Entrenador'
   },
   {
     id: 2,
-    class: 'Is it good butterscotch ice-cream?',
-    teacher: 'Milk, Powder',
-    student: 'Frank, Tower',
-    name: 'Estrategia',
-    description: 'Supreme fresh tomato available',
-    value: '20%',
-    deliveryDate: '2021-12-11',
-    type: 'A'
+    name: 'Mike Twith',
+    letter: 'B',
+    description: 'good',
+    duration: '2021-12-02',
+    cost: 2500,
+    languague: 'Español',
+    type: 'Entrenador'
   },
   {
     id: 3,
-    class: 'Is it good butterscotch ice-cream?',
-    teacher: 'Milk, Powder',
-    student: 'Frank, Tower',
-    name: 'Tecnica',
-    description: 'Supreme fresh tomato available',
-    value: '20%',
-    deliveryDate: '2021-12-11',
-    type: 'A'
+    name: 'Mike Twith',
+    letter: 'C',
+    description: 'good',
+    duration: '2021-12-02',
+    cost: 3500,
+    languague: 'Español',
+    type: 'Entrenador'
   },
   {
     id: 4,
-    class: 'Is it good butterscotch ice-cream?',
-    teacher: 'Milk, Powder',
-    student: 'Frank, Tower',
-    name: 'Tactica',
-    description: 'Supreme fresh tomato available',
-    value: '30%',
-    deliveryDate: '2021-12-11',
-    type: 'A'
+    name: 'Mike Twith',
+    letter: 'D',
+    description: 'good',
+    duration: '2021-12-02',
+    cost: 4500,
+    languague: 'Español',
+    type: 'Entrenador'
   },
 ];
 
@@ -87,17 +82,17 @@ const BCrumb = [
     title: 'ENEFUT',
   },
   {
-    title: 'Practicas',
+    title: 'Documentos',
   },
 ];
 
-const PracticasTable = () => {
+const LicenciaTable = () => {
   const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
   return (
-    <PageContainer title="Practicas" description="Practicas de estudiantes">
+    <PageContainer title="Licencias" description="Tipos de Licencias">
       {/* breadcrumb */}
-      <Breadcrumb title="Listado de Practicas" items={BCrumb} />
+      <Breadcrumb title="Listado de Licencias" items={BCrumb} />
       {/* end breadcrumb */}
       <Card>
         <CardContent>
@@ -107,10 +102,10 @@ const PracticasTable = () => {
             }}
           >
             <Box display="flex" justifyContent="flex-start">
-              <Button  
+              <Button 
                 variant="outlined" 
                 color="primary" 
-                href="practicas/nueva"
+                href="licencias/nueva"
                 startIcon={<FeatherIcon icon="plus" width="15" height="15" />}
               >
                 Agregar
@@ -137,44 +132,29 @@ const PracticasTable = () => {
                   return (
                     <TableRow hover key={row.id}>
                       <TableCell>
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            mb: 1,
-                          }}
-                        >
-                          {Capitalize(row.class)}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          pl: 0,
-                        }}
-                      >
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            mb: 1,
-                          }}
-                        >
-                          {Capitalize(row.teacher)}
-                        </Typography>
-                        
-                      </TableCell>
-                      <TableCell>
-                        <Typography variant="h5">{row.student}</Typography>
-                      </TableCell>
-                      <TableCell>
                         <Typography variant="h5">{row.name}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            mb: 1,
+                          }}
+                        >
+                          {Capitalize(row.letter)}
+                        </Typography>
                       </TableCell>
                       <TableCell>
                         <Typography variant="h5">{row.description}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.value}</Typography>
+                        <Typography variant="h5">{row.duration}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{new Date(row.deliveryDate).toDateString() }</Typography>
+                        <Typography variant="h5">{row.cost}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="h5">{row.languague}</Typography>
                       </TableCell>
                       <TableCell>
                         <Typography variant="h5">{row.type}</Typography>
@@ -213,4 +193,4 @@ const PracticasTable = () => {
   );
 };
 
-export default PracticasTable;
+export default LicenciaTable;

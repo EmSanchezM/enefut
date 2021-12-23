@@ -6,7 +6,6 @@ import {
   Typography,
   Box,
   Avatar,
-  LinearProgress,
   IconButton,
   Table,
   TableBody,
@@ -14,24 +13,26 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Button,
 } from '@mui/material';
 
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
 
-import img1 from '../../assets/images/users/5.jpg';
-import img2 from '../../assets/images/users/6.jpg';
-import img3 from '../../assets/images/users/7.jpg';
-import img4 from '../../assets/images/users/8.jpg';
+import img1 from '../../assets/images/users/1.jpg';
+import img2 from '../../assets/images/users/2.jpg';
+import img3 from '../../assets/images/users/3.jpg';
+import img4 from '../../assets/images/users/4.jpg';
 
 const columns = [
-  { id: 'pname', label: 'Calificacion', minWidth: 170 },
-  { id: 'review', label: 'Review', minWidth: 100 },
-  {
-    id: 'earnings',
-    label: 'Earnings',
-    minWidth: 170,
-  },
+  { id: 'pname', label: 'Nombre', minWidth: 170 },
+  { id: 'identidad', label: 'No Identidad', minWidth: 100 },
+  { id: 'code', label: 'Codigo', minWidth: 100 },
+  { id: 'birth', label: 'Cumpleaños', minWidth: 100 },
+  { id: 'email', label: 'Correo', minWidth: 100 },
+  { id: 'phone', label: 'Telefono', minWidth: 100 },
+  { id: 'location', label: 'Ubicacion', minWidth: 100 },
+  { id: 'type', label: 'Tipo', minWidth: 100 },
   {
     id: 'action',
     label: 'Action',
@@ -43,38 +44,54 @@ const rows = [
   {
     id: 1,
     imgsrc: img1,
-    name: 'Is it good butterscotch ice-cream?',
-    tags: 'Ice-Cream, Milk, Powder',
-    review: 'good',
-    percent: 65,
-    earnings: '546,000',
+    name: 'Milk',
+    lastName: 'Powder',
+    identidad: '0811-1988-00580',
+    code: '01-STUDENT',
+    birth: '1998-02-20',
+    email: 'enefut@gmail.com',
+    phone: '89745012',
+    location: 'new york',
+    type: 'A'
   },
   {
     id: 2,
     imgsrc: img2,
-    name: 'Supreme fresh tomato available',
-    tags: 'Market, Mall',
-    review: 'excellent',
-    percent: 98,
-    earnings: '780,000',
+    name: 'Milk',
+    lastName: 'Powder',
+    identidad: '0811-1988-00580',
+    code: '01-STUDENT',
+    birth: '1998-02-20',
+    email: 'enefut@gmail.com',
+    phone: '89745012',
+    location: 'new york',
+    type: 'A'
   },
   {
     id: 3,
     imgsrc: img3,
-    name: 'Red color candy from Gucci',
-    tags: 'Chocolate, Yummy',
-    review: 'average',
-    percent: 46,
-    earnings: '457,000',
+    name: 'Milk',
+    lastName: 'Powder',
+    identidad: '0811-1988-00580',
+    code: '01-STUDENT',
+    birth: '1998-02-20',
+    email: 'enefut@gmail.com',
+    phone: '89745012',
+    location: 'new york',
+    type: 'A'
   },
   {
     id: 4,
     imgsrc: img4,
-    name: 'Stylish night lamp for night',
-    tags: 'Elecric, Wire, Current',
-    review: 'poor',
-    percent: 23,
-    earnings: '125,000',
+    name: 'Milk',
+    lastName: 'Powder',
+    identidad: '0811-1988-00580',
+    code: '01-STUDENT',
+    birth: '1998-02-20',
+    email: 'enefut@gmail.com',
+    phone: '89745012',
+    location: 'new york',
+    type: 'A'
   },
 ];
 
@@ -84,17 +101,17 @@ const BCrumb = [
     title: 'ENEFUT',
   },
   {
-    title: 'Calificaciones',
+    title: 'Estudiantes',
   },
 ];
 
-const CalificacionTable = () => {
+const EstudianteTable = () => {
   const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
   return (
-    <PageContainer title="Calificaciones" description="Calificaciones de los estudiantes">
+    <PageContainer title="Estudiantes" description="Estudiantes">
       {/* breadcrumb */}
-      <Breadcrumb title="Listado de Calificaciones" items={BCrumb} />
+      <Breadcrumb title="Listado de Estudiantes" items={BCrumb} />
       {/* end breadcrumb */}
       <Card>
         <CardContent>
@@ -103,6 +120,17 @@ const CalificacionTable = () => {
               maxHeight: 440,
             }}
           >
+            <Box display="flex" justifyContent="flex-start">
+              <Button 
+                variant="outlined" 
+                color="primary" 
+                href="/estudiantes/nuevo"
+                startIcon={<FeatherIcon icon="plus" width="15" height="15" />}
+              >
+                Agregar
+              </Button>
+            </Box>
+            
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -144,10 +172,7 @@ const CalificacionTable = () => {
                               ml: 2,
                             }}
                           >
-                            <Typography variant="h5">{row.name}</Typography>
-                            <Typography color="textSecondary" variant="h6" fontWeight="400">
-                              {row.tags}
-                            </Typography>
+                            <Typography variant="h5">{Capitalize(row.name)} {Capitalize(row.lastName)}</Typography>
                           </Box>
                         </Box>
                       </TableCell>
@@ -162,52 +187,46 @@ const CalificacionTable = () => {
                             mb: 1,
                           }}
                         >
-                          {Capitalize(row.review)}
+                          {row.identidad}
                         </Typography>
-                        <LinearProgress
-                          value={row.percent}
-                          variant="determinate"
-                          sx={{
-                            '& span': {
-                              backgroundColor:
-                                row.review === 'good'
-                                  ? (theme) => theme.palette.primary.main
-                                  : row.review === 'excellent'
-                                  ? (theme) => theme.palette.success.main
-                                  : row.review === 'average'
-                                  ? (theme) => theme.palette.warning.main
-                                  : row.review === 'poor'
-                                  ? (theme) => theme.palette.error.main
-                                  : (theme) => theme.palette.secondary.main,
-                            },
-                          }}
-                        />
-                        <Typography
-                          color="textSecondary"
-                          variant="h6"
-                          fontWeight="400"
-                          sx={{
-                            mt: 1,
-                            whiteSpace: 'nowrap',
-                          }}
-                        >
-                          {row.percent}% sold
-                        </Typography>
+                        
                       </TableCell>
                       <TableCell>
-                        <Typography color="textSecondary" variant="h6">
-                          Earnings
-                        </Typography>
-                        <Typography variant="h5">${row.earnings}</Typography>
+                        <Typography variant="h5">{row.code}</Typography>
                       </TableCell>
                       <TableCell>
+                        <Typography variant="h5">{new Date(row.birth).toLocaleDateString() }</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="h5">{row.email}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="h5">{row.phone}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="h5">{row.location}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="h5">{row.type}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <IconButton>
+                          <FeatherIcon
+                            icon="edit"
+                            width="18"
+                            height="18"
+                            sx={{
+                              color: (theme) => theme.palette.grey.A200,
+                            }}
+                          />
+                        </IconButton>
                         <IconButton>
                           <FeatherIcon
                             icon="trash"
                             width="18"
                             height="18"
                             sx={{
-                              color: (theme) => theme.palette.grey.A200,
+                              color: (theme) => theme.palette.red.A200,
                             }}
                           />
                         </IconButton>
@@ -224,4 +243,4 @@ const CalificacionTable = () => {
   );
 };
 
-export default CalificacionTable;
+export default EstudianteTable;

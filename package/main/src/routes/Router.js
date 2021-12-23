@@ -36,14 +36,27 @@ const EnhancedTable = lazy(() => import('../views/tables/EnhancedTable'));
 const CollapsibleTable = lazy(() => import('../views/tables/CollapsibleTable'));
 const FixedHeaderTable = lazy(() => import('../views/tables/FixedHeaderTable'));
 
-/** Utiles ya */
+/** Tables custom */
 const PracticasTable = lazy(() => import('../views/tables/PracticasTable'));
-const CalificacionTable = lazy(() => import('../views/tables/CalificacionTable'));
-const DocumentoTable = lazy(() => import('../views/tables/DocumentoTable'));
+const ClasesTable = lazy(() => import('../views/tables/ClasesTable'));
+const AvisoTable = lazy(() => import('../views/tables/AvisoTable'));
+const LicenciaTable = lazy(() => import('../views/tables/LicenciaTable'));
 const InstructorTable = lazy(() => import('../views/tables/InstructorTable'));
-const MatriculaTable = lazy(() => import('../views/tables/MatriculaTable'));
+const InscripcionTable = lazy(() => import('../views/tables/InscripcionTable'));
 const PagosTable = lazy(() => import('../views/tables/PagosTable'));
-const AsistenciaTable = lazy(() => import('../views/tables/AsistenciaTable'));
+const EstudianteTable = lazy(() => import('../views/tables/EstudianteTable'));
+const GradoTable = lazy(() => import('../views/tables/GradoTable'));
+
+// form layouts
+const FormCustom = lazy(() => import('../views/form-layouts/FormCustom'));
+const FormPractica = lazy(() => import('../views/form-layouts/FormPractica'));
+const FormEstudiante = lazy(() => import('../views/form-layouts/FormEstudiante'));
+const FormInstructor = lazy(() => import('../views/form-layouts/FormInstructor'));
+const FormClase = lazy(() => import('../views/form-layouts/FormClase'));
+const FormAviso = lazy(() => import('../views/form-layouts/FormAviso'));
+const FormInscripcion = lazy(() => import('../views/form-layouts/FormInscripcion'));
+const FormLicencia = lazy(() => import('../views/form-layouts/FormLicencia'));
+const FormGrado = lazy(() => import('../views/form-layouts/FormGrado'));
 
 // form elements
 const ExAutoComplete = lazy(() => import('../views/form-elements/ExAutoComplete'));
@@ -54,9 +67,6 @@ const ExRadio = lazy(() => import('../views/form-elements/ExRadio'));
 const ExSlider = lazy(() => import('../views/form-elements/ExSlider'));
 const ExSwitch = lazy(() => import('../views/form-elements/ExSwitch'));
 const FormWizard = lazy(() => import('../views/form-layouts/FormWizard'));
-// form layouts
-const FormLayouts = lazy(() => import('../views/form-layouts/FormLayouts'));
-const FormCustom = lazy(() => import('../views/form-layouts/FormCustom'));
 
 // widgets
 const WidgetFeed = lazy(() => import('../views/widgets/widget-feed/WidgetFeed'));
@@ -87,6 +97,7 @@ const ExAlert = lazy(() => import('../views/alert/ExAlert'));
  * { path: '/dashboards/dashboard2', exact: true, element: <Dashboard2 /> },
     { path: '/dashboards/dashboard3', exact: true, element: <Dashboard3 /> },
  */
+
 /* ****Routes***** */
 
 const Router = [
@@ -111,14 +122,31 @@ const Router = [
       { path: '/tables/fixed-header-table', element: <FixedHeaderTable /> },
 
       { path: '/practicas', element: <PracticasTable /> },
-      { path: '/calificaciones', element: <CalificacionTable /> },
-      { path: '/matriculas', element: <MatriculaTable /> },
-      { path: '/documentos', element: <DocumentoTable /> },
-      { path: '/instructores', element: <InstructorTable /> },
-      { path: '/pagos', element: <PagosTable /> },
-      { path: '/asistencias', element: <AsistenciaTable /> },
+      { path: '/practicas/nueva', element: <FormPractica /> },
 
-      { path: '/form-layouts/form-layouts', element: <FormLayouts /> },
+      { path: '/clases', element: <ClasesTable /> },
+      { path: '/clases/nueva', element: <FormClase /> },
+
+      { path: '/grados', element: <GradoTable /> },
+      { path: '/grados/nuevo', element: <FormGrado /> },
+
+      { path: '/avisos', element: <AvisoTable /> },
+      { path: '/avisos/nuevo', element: <FormAviso /> },
+
+      { path: '/inscripciones', element: <InscripcionTable /> },
+      { path: '/inscripciones/nueva', element: <FormInscripcion /> },
+
+      { path: '/licencias', element: <LicenciaTable /> },
+      { path: '/licencias/nueva', element: <FormLicencia /> },
+
+      { path: '/pagos', element: <PagosTable /> },
+
+      { path: '/instructores', element: <InstructorTable /> },
+      { path: '/instructores/nuevo', element: <FormInstructor /> },
+
+      { path: '/estudiantes', element: <EstudianteTable /> },
+      { path: '/estudiantes/nuevo', element: <FormEstudiante /> },
+     
       { path: '/form-elements/autocomplete', element: <ExAutoComplete /> },
       { path: '/form-elements/button', element: <ExButton /> },
       { path: '/form-elements/checkbox', element: <ExCheckbox /> },

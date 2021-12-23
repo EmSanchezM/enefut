@@ -6,7 +6,6 @@ import {
   Typography,
   Box,
   Avatar,
-  LinearProgress,
   IconButton,
   Table,
   TableBody,
@@ -14,6 +13,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Button,
 } from '@mui/material';
 
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
@@ -26,12 +26,14 @@ import img4 from '../../assets/images/users/8.jpg';
 
 const columns = [
   { id: 'pname', label: 'Instructor', minWidth: 170 },
-  { id: 'review', label: 'Review', minWidth: 100 },
-  {
-    id: 'earnings',
-    label: 'Earnings',
-    minWidth: 170,
-  },
+  { id: 'code', label: 'Codigo', minWidth: 100 },
+  { id: 'title', label: 'Titulo', minWidth: 100 },
+  { id: 'email', label: 'Correo', minWidth: 100 },
+  { id: 'phone', label: 'Telefono', minWidth: 100 },
+  { id: 'location', label: 'Ubicacion', minWidth: 100 },
+  { id: 'specialty', label: 'Especialidad', minWidth: 100 },
+  { id: 'experience', label: 'Experiencia', minWidth: 100 },
+  { id: 'type', label: 'Tipo', minWidth: 100 },
   {
     id: 'action',
     label: 'Action',
@@ -43,38 +45,62 @@ const rows = [
   {
     id: 1,
     imgsrc: img1,
-    name: 'Is it good butterscotch ice-cream?',
-    tags: 'Ice-Cream, Milk, Powder',
-    review: 'good',
-    percent: 65,
-    earnings: '546,000',
+    name: 'Danny',
+    lastName: 'Turcio',
+    code: '001-TRAINER',
+    birth: '1980-06-15',
+    title: 'good',
+    email: 'example@example.com',
+    phone: '87452015',
+    location: 'New Your',
+    speciality: 'Doctor',
+    experience: '3 years ago',
+    type: 'Trainner'
   },
   {
     id: 2,
     imgsrc: img2,
-    name: 'Supreme fresh tomato available',
-    tags: 'Market, Mall',
-    review: 'excellent',
-    percent: 98,
-    earnings: '780,000',
+    name: 'Arnold',
+    lastName: 'Cruz',
+    code: '002-TRAINER',
+    birth: '1980-06-15',
+    title: 'good',
+    email: 'example@example.com',
+    phone: '87452015',
+    location: 'New Your',
+    speciality: 'Doctor',
+    experience: '3 years ago',
+    type: 'Trainner'
   },
   {
     id: 3,
     imgsrc: img3,
-    name: 'Red color candy from Gucci',
-    tags: 'Chocolate, Yummy',
-    review: 'average',
-    percent: 46,
-    earnings: '457,000',
+    name: 'David',
+    lastName: 'Suazo',
+    code: '003-TRAINER',
+    birth: '1980-06-15',
+    title: 'good',
+    email: 'example@example.com',
+    phone: '87452015',
+    location: 'New Your',
+    speciality: 'Doctor',
+    experience: '3 years ago',
+    type: 'Trainner'
   },
   {
     id: 4,
     imgsrc: img4,
-    name: 'Stylish night lamp for night',
-    tags: 'Elecric, Wire, Current',
-    review: 'poor',
-    percent: 23,
-    earnings: '125,000',
+    name: 'Arnulfo',
+    lastName: 'Padilla',
+    code: '004-TRAINER',
+    birth: '1980-06-15',
+    title: 'good',
+    email: 'example@example.com',
+    phone: '87452015',
+    location: 'New Your',
+    speciality: 'Doctor',
+    experience: '3 years ago',
+    type: 'Trainner'
   },
 ];
 
@@ -103,6 +129,17 @@ const InstructorTable = () => {
               maxHeight: 440,
             }}
           >
+            <Box display="flex" justifyContent="flex-start">
+              <Button  
+                variant="outlined" 
+                color="primary" 
+                href="instructores/nuevo"
+                startIcon={<FeatherIcon icon="plus" width="15" height="15" />}
+              >
+                Agregar
+              </Button>
+            </Box>
+            
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -144,9 +181,9 @@ const InstructorTable = () => {
                               ml: 2,
                             }}
                           >
-                            <Typography variant="h5">{row.name}</Typography>
+                            <Typography variant="h5">{row.name} {row.lastName}</Typography>
                             <Typography color="textSecondary" variant="h6" fontWeight="400">
-                              {row.tags}
+                              { new Date(row.birth).toDateString() }
                             </Typography>
                           </Box>
                         </Box>
@@ -162,52 +199,48 @@ const InstructorTable = () => {
                             mb: 1,
                           }}
                         >
-                          {Capitalize(row.review)}
-                        </Typography>
-                        <LinearProgress
-                          value={row.percent}
-                          variant="determinate"
-                          sx={{
-                            '& span': {
-                              backgroundColor:
-                                row.review === 'good'
-                                  ? (theme) => theme.palette.primary.main
-                                  : row.review === 'excellent'
-                                  ? (theme) => theme.palette.success.main
-                                  : row.review === 'average'
-                                  ? (theme) => theme.palette.warning.main
-                                  : row.review === 'poor'
-                                  ? (theme) => theme.palette.error.main
-                                  : (theme) => theme.palette.secondary.main,
-                            },
-                          }}
-                        />
-                        <Typography
-                          color="textSecondary"
-                          variant="h6"
-                          fontWeight="400"
-                          sx={{
-                            mt: 1,
-                            whiteSpace: 'nowrap',
-                          }}
-                        >
-                          {row.percent}% sold
+                          {Capitalize(row.code)}
                         </Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography color="textSecondary" variant="h6">
-                          Earnings
-                        </Typography>
-                        <Typography variant="h5">${row.earnings}</Typography>
+                        <Typography variant="h5">{row.title}</Typography>
                       </TableCell>
                       <TableCell>
+                        <Typography variant="h5">{row.email}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="h5">{row.phone}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="h5">{row.location}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="h5">{row.speciality}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="h5">{row.experience}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="h5">{row.type}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <IconButton>
+                          <FeatherIcon
+                            icon="edit"
+                            width="18"
+                            height="18"
+                            sx={{
+                              color: (theme) => theme.palette.grey.A200,
+                            }}
+                          />
+                        </IconButton>
                         <IconButton>
                           <FeatherIcon
                             icon="trash"
                             width="18"
                             height="18"
                             sx={{
-                              color: (theme) => theme.palette.grey.A200,
+                              color: (theme) => theme.palette.red.A200,
                             }}
                           />
                         </IconButton>

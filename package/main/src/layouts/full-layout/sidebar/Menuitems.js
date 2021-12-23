@@ -11,132 +11,51 @@ const Menuitems = [
     href: '/dashboards/dashboard1',
   },
   {
-    title: 'Asistencia',
+    title: 'Estudiantes',
     icon: 'users',
-    href: '/customers',
-    collapse: true,
-    children: [
-      {
-        title: 'Listados',
-        icon: 'list',
-        href: 'asistencias',
-      },
-      {
-        title: 'Edit',
-        icon: 'edit',
-        href: '/form-layouts/form-layouts',
-      },
-    ],
-  },
-  {
-    title: 'Practicas',
-    icon: 'activity',
-    href: '/shop',
-    collapse: true,
-    children: [
-      {
-        title: 'Listados',
-        icon: 'list',
-        href: 'practicas',
-      },
-      {
-        title: 'Detalle',
-        icon: 'file-text',
-        href: '/form-layouts/form-custom',
-      },
-    ],
-  },
-  {
-    title: 'Calificaciones',
-    icon: 'book',
-    href: '/form-elements',
-    collapse: true,
-    children: [
-      {
-        title: 'Listados',
-        icon: 'disc',
-        href: 'calificaciones',
-      },
-      {
-        title: 'Detalle',
-        icon: 'file-text',
-        href: '/form-layouts/form-wizard',
-      },
-    ],
-  },
-  {
-    title: 'Documentos',
-    icon: 'file-text',
-    href: '/tables',
-    collapse: true,
-    children: [
-      {
-        title: 'Listados',
-        icon: 'disc',
-        href: 'documentos',
-      },
-      {
-        title: 'Detalle',
-        icon: 'file-text',
-        href: '/shop/shop-detail',
-      },
-    ],
-  },
-  {
-    title: 'Matriculas',
-    icon: 'user-plus',
-    href: '/tables',
-    collapse: true,
-    children: [
-      {
-        title: 'Listados',
-        icon: 'disc',
-        href: 'matriculas',
-      },
-      {
-        title: 'Detalle',
-        icon: 'file-text',
-        href: '/shop/shop-detail',
-      },
-    ],
-  },
-  {
-    title: 'Pagos',
-    icon: 'dollar-sign',
-    href: '/tables',
-    collapse: true,
-    children: [
-      {
-        title: 'Listados',
-        icon: 'disc',
-        href: 'pagos',
-      },
-      {
-        title: 'Detalle',
-        icon: 'file-text',
-        href: '/shop/shop-detail',
-      },
-    ],
+    href: '/estudiantes',
   },
   {
     title: 'Instructores',
     icon: 'user-check',
-    href: '/tables',
-    collapse: true,
-    children: [
-      {
-        title: 'Listados',
-        icon: 'disc',
-        href: 'instructores',
-      },
-      {
-        title: 'Detalle',
-        icon: 'file-text',
-        href: '/shop/shop-detail',
-      },
-    ],
+    href: '/instructores',
   },
-
+  {
+    title: 'Clases',
+    icon: 'activity',
+    href: '/clases',
+  },
+  {
+    title: 'Grados',
+    icon: 'book',
+    href: '/grados',
+  },
+  {
+    title: 'Practicas',
+    icon: 'activity',
+    href: '/practicas',
+  },
+  {
+    title: 'Licencias',
+    icon: 'file-text',
+    href: '/licencias'
+  },
+  {
+    title: 'Inscripciones',
+    icon: 'user-plus',
+    href: '/inscripciones',
+  },
+  {
+    title: 'Pagos',
+    icon: 'dollar-sign',
+    href: '/pagos',
+  },
+  {
+    title: 'Avisos',
+    icon: 'book',
+    href: '/avisos',
+  },
+  
 ];
 
 export default Menuitems;

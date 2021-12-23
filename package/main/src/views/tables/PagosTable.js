@@ -5,8 +5,6 @@ import {
   CardContent,
   Typography,
   Box,
-  Avatar,
-  LinearProgress,
   IconButton,
   Table,
   TableBody,
@@ -14,24 +12,15 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Button,
 } from '@mui/material';
 
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
 
-import img1 from '../../assets/images/users/1.jpg';
-import img2 from '../../assets/images/users/2.jpg';
-import img3 from '../../assets/images/users/3.jpg';
-import img4 from '../../assets/images/users/4.jpg';
-
 const columns = [
-  { id: 'pname', label: 'Pago', minWidth: 170 },
-  { id: 'review', label: 'Review', minWidth: 100 },
-  {
-    id: 'earnings',
-    label: 'Earnings',
-    minWidth: 170,
-  },
+  { id: 'enrollment', label: 'No Inscripcion', minWidth: 170 },
+  { id: 'value', label: 'Valor Pagado', minWidth: 170 },
   {
     id: 'action',
     label: 'Action',
@@ -42,39 +31,23 @@ const columns = [
 const rows = [
   {
     id: 1,
-    imgsrc: img1,
-    name: 'Is it good butterscotch ice-cream?',
-    tags: 'Ice-Cream, Milk, Powder',
-    review: 'good',
-    percent: 65,
-    earnings: '546,000',
+    enrollment: 2,
+    value: 1500,
   },
   {
     id: 2,
-    imgsrc: img2,
-    name: 'Supreme fresh tomato available',
-    tags: 'Market, Mall',
-    review: 'excellent',
-    percent: 98,
-    earnings: '780,000',
+    enrollment: 3,
+    value: 2500,
   },
   {
     id: 3,
-    imgsrc: img3,
-    name: 'Red color candy from Gucci',
-    tags: 'Chocolate, Yummy',
-    review: 'average',
-    percent: 46,
-    earnings: '457,000',
+    enrollment: 4,
+    value: 3500,
   },
   {
     id: 4,
-    imgsrc: img4,
-    name: 'Stylish night lamp for night',
-    tags: 'Elecric, Wire, Current',
-    review: 'poor',
-    percent: 23,
-    earnings: '125,000',
+    enrollment: 4,
+    value: 4500,
   },
 ];
 
@@ -89,8 +62,7 @@ const BCrumb = [
 ];
 
 const PagosTable = () => {
-  const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
-
+  
   return (
     <PageContainer title="Pagos" description="Pagos de estudiantes">
       {/* breadcrumb */}
@@ -103,6 +75,16 @@ const PagosTable = () => {
               maxHeight: 440,
             }}
           >
+            <Box display="flex" justifyContent="flex-start">
+              <Button 
+                variant="outlined" 
+                color="primary" 
+                href="form-layouts/form-layouts"
+                startIcon={<FeatherIcon icon="plus" width="15" height="15" />}
+              >
+                Agregar
+              </Button>
+            </Box>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -123,91 +105,30 @@ const PagosTable = () => {
                 {rows.map((row) => {
                   return (
                     <TableRow hover key={row.id}>
-                      <TableCell
-                        sx={{
-                          pl: 0,
-                        }}
-                      >
-                        <Box display="flex" alignItems="center">
-                          <Avatar
-                            src={row.imgsrc}
-                            alt={row.imgsrc}
+                      <TableCell>
+                        <Typography variant="h5">{row.enrollment}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="h5">$ {row.value}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <IconButton>
+                          <FeatherIcon
+                            icon="edit"
+                            width="18"
+                            height="18"
                             sx={{
-                              borderRadius: '10px',
-                              height: '70px',
-                              width: '90px',
+                              color: (theme) => theme.palette.grey.A200,
                             }}
                           />
-
-                          <Box
-                            sx={{
-                              ml: 2,
-                            }}
-                          >
-                            <Typography variant="h5">{row.name}</Typography>
-                            <Typography color="textSecondary" variant="h6" fontWeight="400">
-                              {row.tags}
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          pl: 0,
-                        }}
-                      >
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            mb: 1,
-                          }}
-                        >
-                          {Capitalize(row.review)}
-                        </Typography>
-                        <LinearProgress
-                          value={row.percent}
-                          variant="determinate"
-                          sx={{
-                            '& span': {
-                              backgroundColor:
-                                row.review === 'good'
-                                  ? (theme) => theme.palette.primary.main
-                                  : row.review === 'excellent'
-                                  ? (theme) => theme.palette.success.main
-                                  : row.review === 'average'
-                                  ? (theme) => theme.palette.warning.main
-                                  : row.review === 'poor'
-                                  ? (theme) => theme.palette.error.main
-                                  : (theme) => theme.palette.secondary.main,
-                            },
-                          }}
-                        />
-                        <Typography
-                          color="textSecondary"
-                          variant="h6"
-                          fontWeight="400"
-                          sx={{
-                            mt: 1,
-                            whiteSpace: 'nowrap',
-                          }}
-                        >
-                          {row.percent}% sold
-                        </Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography color="textSecondary" variant="h6">
-                          Earnings
-                        </Typography>
-                        <Typography variant="h5">${row.earnings}</Typography>
-                      </TableCell>
-                      <TableCell>
+                        </IconButton>
                         <IconButton>
                           <FeatherIcon
                             icon="trash"
                             width="18"
                             height="18"
                             sx={{
-                              color: (theme) => theme.palette.grey.A200,
+                              color: (theme) => theme.palette.red.A200,
                             }}
                           />
                         </IconButton>

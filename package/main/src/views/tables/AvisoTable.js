@@ -19,17 +19,14 @@ import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
 
 const columns = [
-  { id: 'class', label: 'Clase', minWidth: 170 },
-  { id: 'teacher', label: 'Maestro', minWidth: 100 },
-  { id: 'student', label: 'Estudiante', minWidth: 100 },
-  { id: 'name', label: 'Practica', minWidth: 100 },
-  { id: 'description', label: 'Descripcion', minWidth: 170 },
-  { id: 'value', label: 'Valor', minWidth: 100 },
-  { id: 'delivery_date', label: 'Fecha', minWidth: 100 },
+  { id: 'license', label: 'Licencia', minWidth: 170 },
+  { id: 'class', label: 'Clase', minWidth: 100 },
+  { id: 'name', label: 'Aviso', minWidth: 100 },
+  { id: 'description', label: 'Descripcion', minWidth: 100 },
   { id: 'type', label: 'Tipo', minWidth: 100 },
   {
     id: 'action',
-    label: 'Acciones',
+    label: 'Accion',
     minWidth: 170,
   },
 ];
@@ -37,47 +34,35 @@ const columns = [
 const rows = [
   {
     id: 1,
-    class: 'Is it good butterscotch ice-cream?',
-    teacher: 'Milk, Powder',
-    student: 'Frank, Tower',
-    name: 'Dominio',
-    description: 'Supreme fresh tomato available',
-    value: '20%',
-    deliveryDate: '2021-12-11',
-    type: 'A'
+    license: 'A',
+    class: 'Tactico',
+    name: 'aviso',
+    description: 'Is it good butterscotch ice-cream',
+    type: 'A',
   },
   {
     id: 2,
-    class: 'Is it good butterscotch ice-cream?',
-    teacher: 'Milk, Powder',
-    student: 'Frank, Tower',
-    name: 'Estrategia',
-    description: 'Supreme fresh tomato available',
-    value: '20%',
-    deliveryDate: '2021-12-11',
-    type: 'A'
+    license: 'B',
+    class: 'Tactico',
+    name: 'aviso',
+    description: 'Is it good butterscotch ice-cream',
+    type: 'B',
   },
   {
     id: 3,
-    class: 'Is it good butterscotch ice-cream?',
-    teacher: 'Milk, Powder',
-    student: 'Frank, Tower',
-    name: 'Tecnica',
-    description: 'Supreme fresh tomato available',
-    value: '20%',
-    deliveryDate: '2021-12-11',
-    type: 'A'
+    license: 'C',
+    class: 'Tactico',
+    name: 'aviso',
+    description: 'Is it good butterscotch ice-cream',
+    type: 'C',
   },
   {
     id: 4,
-    class: 'Is it good butterscotch ice-cream?',
-    teacher: 'Milk, Powder',
-    student: 'Frank, Tower',
-    name: 'Tactica',
-    description: 'Supreme fresh tomato available',
-    value: '30%',
-    deliveryDate: '2021-12-11',
-    type: 'A'
+    license: 'D',
+    class: 'Tactico',
+    name: 'aviso',
+    description: 'Is it good butterscotch ice-cream',
+    type: 'D',
   },
 ];
 
@@ -87,17 +72,17 @@ const BCrumb = [
     title: 'ENEFUT',
   },
   {
-    title: 'Practicas',
+    title: 'Avisos',
   },
 ];
 
-const PracticasTable = () => {
+const AvisoTable = () => {
   const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
   return (
-    <PageContainer title="Practicas" description="Practicas de estudiantes">
+    <PageContainer title="Avisos" description="Avisos">
       {/* breadcrumb */}
-      <Breadcrumb title="Listado de Practicas" items={BCrumb} />
+      <Breadcrumb title="Listado de Avisos" items={BCrumb} />
       {/* end breadcrumb */}
       <Card>
         <CardContent>
@@ -107,10 +92,10 @@ const PracticasTable = () => {
             }}
           >
             <Box display="flex" justifyContent="flex-start">
-              <Button  
+              <Button 
                 variant="outlined" 
                 color="primary" 
-                href="practicas/nueva"
+                href="/avisos/nuevo"
                 startIcon={<FeatherIcon icon="plus" width="15" height="15" />}
               >
                 Agregar
@@ -137,44 +122,16 @@ const PracticasTable = () => {
                   return (
                     <TableRow hover key={row.id}>
                       <TableCell>
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            mb: 1,
-                          }}
-                        >
-                          {Capitalize(row.class)}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          pl: 0,
-                        }}
-                      >
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            mb: 1,
-                          }}
-                        >
-                          {Capitalize(row.teacher)}
-                        </Typography>
-                        
+                        <Typography variant="h5">{row.license}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.student}</Typography>
+                        <Typography variant="h5">{row.class}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.name}</Typography>
+                        <Typography variant="h5">{Capitalize(row.name)}</Typography>
                       </TableCell>
                       <TableCell>
                         <Typography variant="h5">{row.description}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography variant="h5">{row.value}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography variant="h5">{new Date(row.deliveryDate).toDateString() }</Typography>
                       </TableCell>
                       <TableCell>
                         <Typography variant="h5">{row.type}</Typography>
@@ -213,4 +170,4 @@ const PracticasTable = () => {
   );
 };
 
-export default PracticasTable;
+export default AvisoTable;
