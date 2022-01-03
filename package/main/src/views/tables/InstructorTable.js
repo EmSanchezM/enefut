@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import FeatherIcon from 'feather-icons-react';
 import {
   Card,
   CardContent,
   Typography,
   Box,
-  Avatar,
   IconButton,
   Table,
   TableBody,
@@ -19,88 +19,22 @@ import {
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
 
-import img1 from '../../assets/images/users/5.jpg';
-import img2 from '../../assets/images/users/6.jpg';
-import img3 from '../../assets/images/users/7.jpg';
-import img4 from '../../assets/images/users/8.jpg';
+import { fetchTeachers } from '../../redux/teacher/Action';
 
 const columns = [
   { id: 'pname', label: 'Instructor', minWidth: 170 },
-  { id: 'code', label: 'Codigo', minWidth: 100 },
-  { id: 'title', label: 'Titulo', minWidth: 100 },
-  { id: 'email', label: 'Correo', minWidth: 100 },
-  { id: 'phone', label: 'Telefono', minWidth: 100 },
-  { id: 'location', label: 'Ubicacion', minWidth: 100 },
-  { id: 'specialty', label: 'Especialidad', minWidth: 100 },
-  { id: 'experience', label: 'Experiencia', minWidth: 100 },
-  { id: 'type', label: 'Tipo', minWidth: 100 },
+  { id: 'code', label: 'Codigo', minWidth: 150 },
+  { id: 'title', label: 'Titulo', minWidth: 150 },
+  { id: 'email', label: 'Correo', minWidth: 150 },
+  { id: 'phone', label: 'Telefono', minWidth: 150 },
+  { id: 'location', label: 'Ubicacion', minWidth: 150 },
+  { id: 'specialty', label: 'Especialidad', minWidth: 150 },
+  { id: 'experience', label: 'Experiencia', minWidth: 150 },
+  { id: 'type', label: 'Tipo', minWidth: 150 },
   {
     id: 'action',
-    label: 'Action',
+    label: 'Acciones',
     minWidth: 170,
-  },
-];
-
-const rows = [
-  {
-    id: 1,
-    imgsrc: img1,
-    name: 'Danny',
-    lastName: 'Turcio',
-    code: '001-TRAINER',
-    birth: '1980-06-15',
-    title: 'good',
-    email: 'example@example.com',
-    phone: '87452015',
-    location: 'New Your',
-    speciality: 'Doctor',
-    experience: '3 years ago',
-    type: 'Trainner'
-  },
-  {
-    id: 2,
-    imgsrc: img2,
-    name: 'Arnold',
-    lastName: 'Cruz',
-    code: '002-TRAINER',
-    birth: '1980-06-15',
-    title: 'good',
-    email: 'example@example.com',
-    phone: '87452015',
-    location: 'New Your',
-    speciality: 'Doctor',
-    experience: '3 years ago',
-    type: 'Trainner'
-  },
-  {
-    id: 3,
-    imgsrc: img3,
-    name: 'David',
-    lastName: 'Suazo',
-    code: '003-TRAINER',
-    birth: '1980-06-15',
-    title: 'good',
-    email: 'example@example.com',
-    phone: '87452015',
-    location: 'New Your',
-    speciality: 'Doctor',
-    experience: '3 years ago',
-    type: 'Trainner'
-  },
-  {
-    id: 4,
-    imgsrc: img4,
-    name: 'Arnulfo',
-    lastName: 'Padilla',
-    code: '004-TRAINER',
-    birth: '1980-06-15',
-    title: 'good',
-    email: 'example@example.com',
-    phone: '87452015',
-    location: 'New Your',
-    speciality: 'Doctor',
-    experience: '3 years ago',
-    type: 'Trainner'
   },
 ];
 
@@ -116,6 +50,14 @@ const BCrumb = [
 
 const InstructorTable = () => {
   const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+
+  const dispatch = useDispatch();
+
+  const { teachers } = useSelector(state => state.teacherReducer);
+
+  useEffect(() => {
+    dispatch( fetchTeachers() );
+  }, [dispatch]);
 
   return (
     <PageContainer title="Instructores" description="Instructores">
@@ -157,33 +99,23 @@ const InstructorTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => {
+                {teachers.map((teacher) => {
                   return (
-                    <TableRow hover key={row.id}>
+                    <TableRow hover key={teacher._id}>
                       <TableCell
                         sx={{
                           pl: 0,
                         }}
                       >
                         <Box display="flex" alignItems="center">
-                          <Avatar
-                            src={row.imgsrc}
-                            alt={row.imgsrc}
-                            sx={{
-                              borderRadius: '10px',
-                              height: '70px',
-                              width: '90px',
-                            }}
-                          />
-
                           <Box
                             sx={{
                               ml: 2,
                             }}
                           >
-                            <Typography variant="h5">{row.name} {row.lastName}</Typography>
+                            <Typography variant="h5">{Capitalize(teacher.name)} {Capitalize(teacher.lastName)}</Typography>
                             <Typography color="textSecondary" variant="h6" fontWeight="400">
-                              { new Date(row.birth).toDateString() }
+                              { new Date(teacher.birth).toLocaleDateString() }
                             </Typography>
                           </Box>
                         </Box>
@@ -199,29 +131,29 @@ const InstructorTable = () => {
                             mb: 1,
                           }}
                         >
-                          {Capitalize(row.code)}
+                          {teacher.code}
                         </Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.title}</Typography>
+                        <Typography variant="h5">{teacher.title}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.email}</Typography>
+                        <Typography variant="h5">{teacher.email}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.phone}</Typography>
+                        <Typography variant="h5">{teacher.phone}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.location}</Typography>
+                        <Typography variant="h5">{teacher.location}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.speciality}</Typography>
+                        <Typography variant="h5">{teacher.specialty}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.experience}</Typography>
+                        <Typography variant="h5">{teacher.experience}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.type}</Typography>
+                        <Typography variant="h5">{teacher.type}</Typography>
                       </TableCell>
                       <TableCell>
                         <IconButton>

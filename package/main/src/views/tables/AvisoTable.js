@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import FeatherIcon from 'feather-icons-react';
 import {
   Card,
@@ -17,52 +18,20 @@ import {
 
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
+import { fetchNotices } from '../../redux/notices/Action';
 
 const columns = [
   { id: 'license', label: 'Licencia', minWidth: 170 },
-  { id: 'class', label: 'Clase', minWidth: 100 },
-  { id: 'name', label: 'Aviso', minWidth: 100 },
-  { id: 'description', label: 'Descripcion', minWidth: 100 },
-  { id: 'type', label: 'Tipo', minWidth: 100 },
+  { id: 'section', label: 'Seccion', minWidth: 150 },
+  { id: 'title', label: 'Aviso', minWidth: 150 },
+  { id: 'dateInit', label: 'Fecha de Inicio', minWidth: 150 },
+  { id: 'dateEnd', label: 'Fecha de Finalizacion', minWidth: 150 },
+  { id: 'description', label: 'Descripcion', minWidth: 150 },
+  { id: 'type', label: 'Tipo', minWidth: 150 },
   {
     id: 'action',
     label: 'Accion',
     minWidth: 170,
-  },
-];
-
-const rows = [
-  {
-    id: 1,
-    license: 'A',
-    class: 'Tactico',
-    name: 'aviso',
-    description: 'Is it good butterscotch ice-cream',
-    type: 'A',
-  },
-  {
-    id: 2,
-    license: 'B',
-    class: 'Tactico',
-    name: 'aviso',
-    description: 'Is it good butterscotch ice-cream',
-    type: 'B',
-  },
-  {
-    id: 3,
-    license: 'C',
-    class: 'Tactico',
-    name: 'aviso',
-    description: 'Is it good butterscotch ice-cream',
-    type: 'C',
-  },
-  {
-    id: 4,
-    license: 'D',
-    class: 'Tactico',
-    name: 'aviso',
-    description: 'Is it good butterscotch ice-cream',
-    type: 'D',
   },
 ];
 
@@ -78,6 +47,13 @@ const BCrumb = [
 
 const AvisoTable = () => {
   const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+
+  const dispatch = useDispatch();
+  const { notices } = useSelector(state => state.noticeReducer);
+
+  useEffect(() => {
+    dispatch( fetchNotices() );
+  }, [dispatch]);
 
   return (
     <PageContainer title="Avisos" description="Avisos">
@@ -118,23 +94,29 @@ const AvisoTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => {
+                {notices.map((notice) => {
                   return (
-                    <TableRow hover key={row.id}>
+                    <TableRow hover key={notice._id}>
                       <TableCell>
-                        <Typography variant="h5">{row.license}</Typography>
+                        <Typography variant="h5">{notice.license.name}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.class}</Typography>
+                        <Typography variant="h5">{notice.section}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{Capitalize(row.name)}</Typography>
+                        <Typography variant="h5">{Capitalize(notice.title)}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.description}</Typography>
+                        <Typography variant="h5">{new Date(notice.dateInit).toLocaleDateString() }</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.type}</Typography>
+                        <Typography variant="h5">{new Date(notice.dateEnd).toLocaleDateString() }</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="h5">{notice.description}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="h5">{notice.type}</Typography>
                       </TableCell>
                       <TableCell>
                         <IconButton>

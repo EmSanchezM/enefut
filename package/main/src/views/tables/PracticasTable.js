@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import FeatherIcon from 'feather-icons-react';
 import {
   Card,
@@ -18,66 +19,21 @@ import {
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
 
+import { fetchActivities } from '../../redux/activities/Action';
+
 const columns = [
   { id: 'class', label: 'Clase', minWidth: 170 },
-  { id: 'teacher', label: 'Maestro', minWidth: 100 },
-  { id: 'student', label: 'Estudiante', minWidth: 100 },
-  { id: 'name', label: 'Practica', minWidth: 100 },
+  { id: 'teacher', label: 'Maestro', minWidth: 150 },
+  { id: 'student', label: 'Estudiante', minWidth: 150 },
+  { id: 'name', label: 'Practica', minWidth: 150 },
   { id: 'description', label: 'Descripcion', minWidth: 170 },
-  { id: 'value', label: 'Valor', minWidth: 100 },
-  { id: 'delivery_date', label: 'Fecha', minWidth: 100 },
-  { id: 'type', label: 'Tipo', minWidth: 100 },
+  { id: 'value', label: 'Valor', minWidth: 150 },
+  { id: 'delivery_date', label: 'Fecha', minWidth: 150 },
+  { id: 'type', label: 'Tipo', minWidth: 150 },
   {
     id: 'action',
     label: 'Acciones',
     minWidth: 170,
-  },
-];
-
-const rows = [
-  {
-    id: 1,
-    class: 'Is it good butterscotch ice-cream?',
-    teacher: 'Milk, Powder',
-    student: 'Frank, Tower',
-    name: 'Dominio',
-    description: 'Supreme fresh tomato available',
-    value: '20%',
-    deliveryDate: '2021-12-11',
-    type: 'A'
-  },
-  {
-    id: 2,
-    class: 'Is it good butterscotch ice-cream?',
-    teacher: 'Milk, Powder',
-    student: 'Frank, Tower',
-    name: 'Estrategia',
-    description: 'Supreme fresh tomato available',
-    value: '20%',
-    deliveryDate: '2021-12-11',
-    type: 'A'
-  },
-  {
-    id: 3,
-    class: 'Is it good butterscotch ice-cream?',
-    teacher: 'Milk, Powder',
-    student: 'Frank, Tower',
-    name: 'Tecnica',
-    description: 'Supreme fresh tomato available',
-    value: '20%',
-    deliveryDate: '2021-12-11',
-    type: 'A'
-  },
-  {
-    id: 4,
-    class: 'Is it good butterscotch ice-cream?',
-    teacher: 'Milk, Powder',
-    student: 'Frank, Tower',
-    name: 'Tactica',
-    description: 'Supreme fresh tomato available',
-    value: '30%',
-    deliveryDate: '2021-12-11',
-    type: 'A'
   },
 ];
 
@@ -93,6 +49,13 @@ const BCrumb = [
 
 const PracticasTable = () => {
   const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+
+  const dispatch = useDispatch();
+  const { activities } = useSelector(state => state.activityReducer);
+
+  useEffect(() => {
+    dispatch( fetchActivities() );
+  }, [dispatch]);
 
   return (
     <PageContainer title="Practicas" description="Practicas de estudiantes">
@@ -133,9 +96,9 @@ const PracticasTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => {
+                {activities.map((activity) => {
                   return (
-                    <TableRow hover key={row.id}>
+                    <TableRow hover key={activity._id}>
                       <TableCell>
                         <Typography
                           variant="h6"
@@ -143,7 +106,7 @@ const PracticasTable = () => {
                             mb: 1,
                           }}
                         >
-                          {Capitalize(row.class)}
+                          {Capitalize(activity.class.name)}
                         </Typography>
                       </TableCell>
                       <TableCell
@@ -157,27 +120,27 @@ const PracticasTable = () => {
                             mb: 1,
                           }}
                         >
-                          {Capitalize(row.teacher)}
+                          {Capitalize(activity.teacher.name)} { Capitalize(activity.teacher.lastName) }
                         </Typography>
                         
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.student}</Typography>
+                        <Typography variant="h5">{Capitalize(activity.student.name)} { Capitalize(activity.student.lastName) }</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.name}</Typography>
+                        <Typography variant="h5">{activity.title}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.description}</Typography>
+                        <Typography variant="h5">{activity.description}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.value}</Typography>
+                        <Typography variant="h5">{activity.value}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{new Date(row.deliveryDate).toDateString() }</Typography>
+                        <Typography variant="h5">{new Date(activity.deliveryDate).toLocaleDateString() }</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.type}</Typography>
+                        <Typography variant="h5">{activity.type}</Typography>
                       </TableCell>
                       <TableCell>
                         <IconButton>

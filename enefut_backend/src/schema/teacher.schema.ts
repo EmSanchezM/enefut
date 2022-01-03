@@ -14,10 +14,6 @@ const payload = {
             required_error: 'Last Name is required'
         }).min(2, { message: 'Must be 2 or more characters long'}),
 
-        code: string({
-            required_error: 'Code is required'
-        }).min(2, { message: 'Must be 2 or more characters long'}),
-
         title: string({
             required_error: 'Title is required'
         }).min(2, { message: 'Must be 2 or more characters long'}),
@@ -50,10 +46,6 @@ const payload = {
 
         type: string({
             required_error: 'Type teacher is required'
-        }).min(2, { message: 'Must be 2 or more characters long'}),
-
-        rol: string({
-            required_error: 'Rol teacher is required'
         }).min(2, { message: 'Must be 2 or more characters long'}),
 
     }).refine((data) => data.password === data.passwordConfirm, {

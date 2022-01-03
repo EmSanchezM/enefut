@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import FeatherIcon from 'feather-icons-react';
 import {
   Card,
@@ -18,6 +19,8 @@ import {
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
 
+import { fetchClasses } from '../../redux/classe/Action';
+
 const columns = [
   { id: 'pname', label: 'Clase', minWidth: 170 },
   { id: 'description', label: 'Descripcion', minWidth: 170 },
@@ -29,45 +32,6 @@ const columns = [
     id: 'action',
     label: 'Acciones',
     minWidth: 170,
-  },
-];
-
-const rows = [
-  {
-    id: 1,
-    name: 'Is it good butterscotch ice-cream?',
-    description: 'Ice-Cream, Milk, Powder',
-    duration: '2021-12-11',
-    languague: 'Español',
-    modality: 'Virtual',
-    type: 'A'
-  },
-  {
-    id: 2,
-    name: 'Supreme fresh tomato available',
-    description: 'Ice-Cream, Milk, Powder',
-    duration: '2021-12-11',
-    languague: 'Español',
-    modality: 'Virtual',
-    type: 'A'
-  },
-  {
-    id: 3,
-    name: 'Red color candy from Gucci',
-    description: 'Ice-Cream, Milk, Powder',
-    duration: '2021-12-11',
-    languague: 'Español',
-    modality: 'Virtual',
-    type: 'A'
-  },
-  {
-    id: 4,
-    name: 'Stylish night lamp for night',
-    description: 'Ice-Cream, Milk, Powder',
-    duration: '2021-12-11',
-    languague: 'Español',
-    modality: 'Virtual',
-    type: 'A'
   },
 ];
 
@@ -83,6 +47,13 @@ const BCrumb = [
 
 const ClasesTable = () => {
   const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+
+  const dispatch = useDispatch();
+  const { classes } = useSelector(state => state.classReducer);
+
+  useEffect(() => {
+    dispatch( fetchClasses() );
+  }, [dispatch]);
 
   return (
     <PageContainer title="Clases" description="Clases de estudiantes">
@@ -123,9 +94,9 @@ const ClasesTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => {
+                {classes.map((classe) => {
                   return (
-                    <TableRow hover key={row.id}>
+                    <TableRow hover key={classe._id}>
                       <TableCell>
                         <Typography
                           variant="h6"
@@ -133,7 +104,7 @@ const ClasesTable = () => {
                             mb: 1,
                           }}
                         >
-                          {Capitalize(row.name)}
+                          {Capitalize(classe.name)}
                         </Typography>
                       </TableCell>
                       <TableCell
@@ -147,21 +118,21 @@ const ClasesTable = () => {
                             mb: 1,
                           }}
                         >
-                          {Capitalize(row.description)}
+                          {Capitalize(classe.description)}
                         </Typography>
                         
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{new Date(row.duration).toLocaleTimeString()} hours</Typography>
+                        <Typography variant="h5">{new Date(classe.duration).toLocaleTimeString()} hours</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.languague}</Typography>
+                        <Typography variant="h5">{classe.language}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.modality}</Typography>
+                        <Typography variant="h5">{classe.modality}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.type}</Typography>
+                        <Typography variant="h5">{classe.type}</Typography>
                       </TableCell>
                       <TableCell>
                         <IconButton>

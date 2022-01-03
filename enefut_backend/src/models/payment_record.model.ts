@@ -3,11 +3,12 @@ import { PaymentDocument } from './payment.model';
 import { UserDocument } from './user.model';
 
 export interface PaymentRecordDocument extends mongoose.Document {
-    datePayment: Date;
+    datePayment: Date | string;
     details: string;
     value: number;
     balance: number;
     status: string;
+    isActive: boolean;
     payment: PaymentDocument['_id'];
     user: UserDocument['_id'];
     createdAt: Date;
@@ -20,6 +21,7 @@ const paymentRecordSchema = new mongoose.Schema({
     value: { type: Number, required: true },
     balance: { type: Number, required: true},
     status: { type: String},
+    isActive: { type: Boolean, default: true },
     payment: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Payment'

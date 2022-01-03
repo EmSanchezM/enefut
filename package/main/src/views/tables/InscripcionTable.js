@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import FeatherIcon from 'feather-icons-react';
 import {
   Card,
@@ -17,47 +18,17 @@ import {
 
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
+import { fetchAttendances } from '../../redux/attendance/Action';
 
 const columns = [
   { id: 'student', label: 'Estudiante', minWidth: 170 },
-  { id: 'license', label: 'Licencia', minWidth: 100 },
+  { id: 'class', label: 'Clase', minWidth: 100 },
   { id: 'section', label: 'Seccion', minWidth: 100 },
   { id: 'type', label: 'Tipo', minWidth: 100 },
   {
     id: 'action',
     label: 'Action',
     minWidth: 170,
-  },
-];
-
-const rows = [
-  {
-    id: 1,
-    student: 'Rick Sanchez',
-    license: 'A',
-    section: 'SECTION-A',
-    type: 'A'
-  },
-  {
-    id: 2,
-    student: 'Rick Sanchez',
-    license: 'B',
-    section: 'SECTION-B',
-    type: 'B'
-  },
-  {
-    id: 3,
-    student: 'Rick Sanchez',
-    license: 'C',
-    section: 'SECTION-C',
-    type: 'C'
-  },
-  {
-    id: 4,
-    student: 'Rick Sanchez',
-    license: 'D',
-    section: 'SECTION-D',
-    type: 'D'
   },
 ];
 
@@ -73,6 +44,13 @@ const BCrumb = [
 
 const InscripcionTable = () => {
   const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+
+  const dispatch = useDispatch();
+  const { attendances } = useSelector(state => state.attendanceReducer);
+
+  useEffect(() => {
+    dispatch( fetchAttendances() );
+  }, [dispatch]);
 
   return (
     <PageContainer title="Inscripciones" description="Incripciones de Estudiantes">
@@ -113,20 +91,20 @@ const InscripcionTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => {
+                {attendances.map((attendance) => {
                   return (
-                    <TableRow hover key={row.id}>
+                    <TableRow hover key={attendance._id}>
                       <TableCell>
-                        <Typography variant="h5">{Capitalize(row.student)}</Typography>
+                        <Typography variant="h5">{Capitalize(attendance.student.name)} {Capitalize(attendance.student.lastName)}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.license}</Typography>
+                        <Typography variant="h5">{attendance.class.name}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.section}</Typography>
+                        <Typography variant="h5">{attendance.section}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.type}</Typography>
+                        <Typography variant="h5">{attendance.type}</Typography>
                       </TableCell>
                       <TableCell>
                         <IconButton>

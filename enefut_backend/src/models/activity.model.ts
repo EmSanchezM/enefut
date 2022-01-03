@@ -6,11 +6,12 @@ export interface ActivityDocument extends mongoose.Document {
     title: string;
     description: string; 
     value: number;
-    deliveryDate: Date | string,
+    deliveryDate: Date | string;
     type: string;
-    student: UserDocument['_id'],
-    class: ClassDocument['_id'],
-    teacher: UserDocument['_id'],
+    student: UserDocument['_id'];
+    class: ClassDocument['_id'];
+    teacher: UserDocument['_id'];
+    isActive: boolean;
     createdAt: Date;
     updatedAt: Date;  
 }
@@ -21,6 +22,7 @@ const activitySchema = new mongoose.Schema({
     value: { type: Number },
     deliveryDate: { type: Date, default: Date.now },
     type: { type: String },
+    isActive: { type: Boolean, default: true },
     student: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

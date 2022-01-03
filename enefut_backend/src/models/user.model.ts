@@ -17,6 +17,7 @@ export interface UserDocument extends mongoose.Document {
     experience: string;
     type: string;
     rol: string;
+    isActive: boolean;
     createdAt: Date;
     updatedAt: Date;  
 }
@@ -35,7 +36,8 @@ const userSchema = new mongoose.Schema({
     specialty: { type: String },
     experience: { type: String },
     type: { type: String },
-    rol: { type: String }
+    rol: { type: String },
+    isActive: { type: Boolean, default: true }
 },{
     timestamps: true,
     versionKey: false

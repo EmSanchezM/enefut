@@ -1,7 +1,19 @@
 import { Request, Response } from 'express';
-import { CreateNoticeInput, DeleteNoticeInput, ReadNoticeInput, UpdateNoticeInput } from '../schema/notice.schema';
-import { createNotice, deleteNotice, findNotice, findNotices, updateNotice } from '../services/notice.service';
 import logger from '../utils/logger';
+import { 
+    CreateNoticeInput, 
+    DeleteNoticeInput, 
+    ReadNoticeInput, 
+    UpdateNoticeInput 
+} from '../schema/notice.schema';
+
+import { 
+    createNotice, 
+    deleteNotice, 
+    findNotice, 
+    findNotices, 
+    updateNotice 
+} from '../services/notice.service';
 
 export async function createNoticeHandler(req: Request<{}, {}, CreateNoticeInput["body"]>, res: Response){
     try {
@@ -10,7 +22,7 @@ export async function createNoticeHandler(req: Request<{}, {}, CreateNoticeInput
         return res.status(201).json({
             ok: true,
             message: 'Notice created succesfully',
-            notice
+            data: notice
         });
 
     } catch (error : any) {
@@ -27,7 +39,7 @@ export async function findNoticesHandler(req: Request, res: Response){
         const notices = await findNotices();
         return res.status(200).json({
             ok: true,
-            notices
+            data: notices
         });
     } catch (error: any) {
         logger.error(error);
@@ -53,7 +65,7 @@ export async function findNoticeHandler(req: Request<ReadNoticeInput['params']>,
 
         return res.status(200).json({
             ok: true,
-            notice
+            data: notice
         });
     } catch (error: any) {
         logger.error(error);
@@ -115,7 +127,7 @@ export async function deleteNoticeHandler(
         return res.status(200).json({
             ok: true, 
             message: 'Notice deleted successfully',
-            notice
+            data: notice
         });
 
     } catch (error: any) {

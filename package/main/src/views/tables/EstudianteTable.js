@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import FeatherIcon from 'feather-icons-react';
 import {
   Card,
   CardContent,
   Typography,
   Box,
-  Avatar,
   IconButton,
   Table,
   TableBody,
@@ -16,82 +15,26 @@ import {
   Button,
 } from '@mui/material';
 
+import { useDispatch, useSelector } from 'react-redux';
+
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
 
-import img1 from '../../assets/images/users/1.jpg';
-import img2 from '../../assets/images/users/2.jpg';
-import img3 from '../../assets/images/users/3.jpg';
-import img4 from '../../assets/images/users/4.jpg';
+import { fetchStudents } from '../../redux/student/Action';
 
 const columns = [
   { id: 'pname', label: 'Nombre', minWidth: 170 },
-  { id: 'identidad', label: 'No Identidad', minWidth: 100 },
-  { id: 'code', label: 'Codigo', minWidth: 100 },
-  { id: 'birth', label: 'Cumpleaños', minWidth: 100 },
-  { id: 'email', label: 'Correo', minWidth: 100 },
-  { id: 'phone', label: 'Telefono', minWidth: 100 },
-  { id: 'location', label: 'Ubicacion', minWidth: 100 },
-  { id: 'type', label: 'Tipo', minWidth: 100 },
+  { id: 'identidad', label: 'No Identidad', minWidth: 150 },
+  { id: 'code', label: 'Codigo', minWidth: 150 },
+  { id: 'birth', label: 'Cumpleaños', minWidth: 150 },
+  { id: 'email', label: 'Correo', minWidth: 150 },
+  { id: 'phone', label: 'Telefono', minWidth: 150 },
+  { id: 'location', label: 'Ubicacion', minWidth: 150 },
+  { id: 'type', label: 'Tipo', minWidth: 150 },
   {
     id: 'action',
-    label: 'Action',
+    label: 'Accion',
     minWidth: 170,
-  },
-];
-
-const rows = [
-  {
-    id: 1,
-    imgsrc: img1,
-    name: 'Milk',
-    lastName: 'Powder',
-    identidad: '0811-1988-00580',
-    code: '01-STUDENT',
-    birth: '1998-02-20',
-    email: 'enefut@gmail.com',
-    phone: '89745012',
-    location: 'new york',
-    type: 'A'
-  },
-  {
-    id: 2,
-    imgsrc: img2,
-    name: 'Milk',
-    lastName: 'Powder',
-    identidad: '0811-1988-00580',
-    code: '01-STUDENT',
-    birth: '1998-02-20',
-    email: 'enefut@gmail.com',
-    phone: '89745012',
-    location: 'new york',
-    type: 'A'
-  },
-  {
-    id: 3,
-    imgsrc: img3,
-    name: 'Milk',
-    lastName: 'Powder',
-    identidad: '0811-1988-00580',
-    code: '01-STUDENT',
-    birth: '1998-02-20',
-    email: 'enefut@gmail.com',
-    phone: '89745012',
-    location: 'new york',
-    type: 'A'
-  },
-  {
-    id: 4,
-    imgsrc: img4,
-    name: 'Milk',
-    lastName: 'Powder',
-    identidad: '0811-1988-00580',
-    code: '01-STUDENT',
-    birth: '1998-02-20',
-    email: 'enefut@gmail.com',
-    phone: '89745012',
-    location: 'new york',
-    type: 'A'
   },
 ];
 
@@ -106,7 +49,12 @@ const BCrumb = [
 ];
 
 const EstudianteTable = () => {
-  const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+  const dispatch = useDispatch();
+  const { students } = useSelector(state => state.studentReducer);
+
+  useEffect(() => {
+    dispatch( fetchStudents() );
+  }, [dispatch]);
 
   return (
     <PageContainer title="Estudiantes" description="Estudiantes">
@@ -148,33 +96,12 @@ const EstudianteTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => {
-                  return (
-                    <TableRow hover key={row.id}>
-                      <TableCell
-                        sx={{
-                          pl: 0,
-                        }}
-                      >
-                        <Box display="flex" alignItems="center">
-                          <Avatar
-                            src={row.imgsrc}
-                            alt={row.imgsrc}
-                            sx={{
-                              borderRadius: '10px',
-                              height: '70px',
-                              width: '90px',
-                            }}
-                          />
-
-                          <Box
-                            sx={{
-                              ml: 2,
-                            }}
-                          >
-                            <Typography variant="h5">{Capitalize(row.name)} {Capitalize(row.lastName)}</Typography>
-                          </Box>
-                        </Box>
+                {students && students.length ? 
+                students.map((student) => 
+                  (
+                    <TableRow hover key={student._id}>
+                      <TableCell>
+                        <Typography variant="h5">{student.name} {student.lastName}</Typography>
                       </TableCell>
                       <TableCell
                         sx={{
@@ -187,27 +114,27 @@ const EstudianteTable = () => {
                             mb: 1,
                           }}
                         >
-                          {row.identidad}
+                          {student.identidad}
                         </Typography>
                         
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.code}</Typography>
+                        <Typography variant="h5">{student.code}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{new Date(row.birth).toLocaleDateString() }</Typography>
+                        <Typography variant="h5">{new Date(student.birth).toLocaleDateString() }</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.email}</Typography>
+                        <Typography variant="h5">{student.email}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.phone}</Typography>
+                        <Typography variant="h5">{student.phone}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.location}</Typography>
+                        <Typography variant="h5">{student.location}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.type}</Typography>
+                        <Typography variant="h5">{student.type}</Typography>
                       </TableCell>
                       <TableCell>
                         <IconButton>
@@ -232,8 +159,9 @@ const EstudianteTable = () => {
                         </IconButton>
                       </TableCell>
                     </TableRow>
-                  );
-                })}
+                  )) : 
+                    'No Students'
+                }
               </TableBody>
             </Table>
           </TableContainer>

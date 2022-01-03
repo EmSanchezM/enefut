@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import FeatherIcon from 'feather-icons-react';
 import {
   Card,
@@ -17,11 +18,12 @@ import {
 
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
+import { fetchGrades } from '../../redux/grade/Action';
 
 const columns = [
   { id: 'student', label: 'Estudiante', minWidth: 170 },
   { id: 'class', label: 'Clase', minWidth: 100 },
-  { id: 'section', label: 'Seccion', minWidth: 100 },
+  { id: 'average', label: 'Promedio', minWidth: 100 },
   { id: 'acumulative', label: 'Acumulativo', minWidth: 100 },
   { id: 'quiz', label: 'Examen', minWidth: 100 },
   { id: 'type', label: 'Tipo', minWidth: 100 },
@@ -29,45 +31,6 @@ const columns = [
     id: 'action',
     label: 'Accion',
     minWidth: 170,
-  },
-];
-
-const rows = [
-  {
-    id: 1,
-    student: 'Tactico',
-    class: 'Tactico',
-    section: 'A',
-    acumulative: 'A',
-    quiz: 'aviso',
-    type: 'A',
-  },
-  {
-    id: 2,
-    student: 'Tactico',
-    class: 'Tactico',
-    section: 'A',
-    acumulative: 'A',
-    quiz: 'aviso',
-    type: 'A',
-  },
-  {
-    id: 3,
-    student: 'Tactico',
-    class: 'Tactico',
-    section: 'A',
-    acumulative: 'A',
-    quiz: 'aviso',
-    type: 'A',
-  },
-  {
-    id: 4,
-    student: 'Tactico',
-    class: 'Tactico',
-    section: 'A',
-    acumulative: 'A',
-    quiz: 'aviso',
-    type: 'A',
   },
 ];
 
@@ -82,7 +45,13 @@ const BCrumb = [
 ];
 
 const GradoTable = () => {
-  const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+  
+  const dispatch = useDispatch();
+  const { grades } = useSelector(state => state.gradeReducer);
+
+  useEffect(() => {
+    dispatch( fetchGrades() );
+  }, [dispatch]);
 
   return (
     <PageContainer title="Grados" description="Grados">
@@ -123,26 +92,26 @@ const GradoTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => {
+                {grades.map((grade) => {
                   return (
-                    <TableRow hover key={row.id}>
+                    <TableRow hover key={grade._id}>
                       <TableCell>
-                        <Typography variant="h5">{row.student}</Typography>
+                        <Typography variant="h5">{grade.student.name} {grade.student.lastName}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.class}</Typography>
+                        <Typography variant="h5">{grade.class.name}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{Capitalize(row.section)}</Typography>
+                        <Typography variant="h5">{grade.average}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.acumulative}</Typography>
+                        <Typography variant="h5">{grade.acumulative}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.quiz}</Typography>
+                        <Typography variant="h5">{grade.quiz}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.type}</Typography>
+                        <Typography variant="h5">{grade.type}</Typography>
                       </TableCell>
                       <TableCell>
                         <IconButton>

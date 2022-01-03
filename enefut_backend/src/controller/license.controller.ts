@@ -1,8 +1,19 @@
 import { Request, Response } from 'express';
 import logger from '../utils/logger';
 
-import { CreateLicenseInput, DeleteLicenseInput, ReadLicenseInput, UpdateLicenseInput } from '../schema/license.schema';
-import { createLicense, findLicenses, findLicense, updateLicense, deleteLicense } from '../services/license.service';
+import { 
+    CreateLicenseInput, 
+    DeleteLicenseInput, 
+    ReadLicenseInput, 
+    UpdateLicenseInput 
+} from '../schema/license.schema';
+import { 
+    createLicense, 
+    findLicenses, 
+    findLicense, 
+    updateLicense, 
+    deleteLicense 
+} from '../services/license.service';
 
 export async function createLicenseHandler(req: Request<{}, {}, CreateLicenseInput["body"]>, res: Response){
     try {
@@ -10,7 +21,7 @@ export async function createLicenseHandler(req: Request<{}, {}, CreateLicenseInp
         return res.status(201).json({
             ok: true,
             message: 'License created succesfully',
-            license
+            data: license
         });
     } catch (error : any) {
         logger.error(error);
@@ -26,7 +37,7 @@ export async function findLicensesHandler(req: Request, res: Response){
         const licenses = await findLicenses();
         return res.status(200).json({
             ok: true,
-            licenses
+            data: licenses
         });
     } catch (error: any) {
         logger.error(error);
@@ -52,7 +63,7 @@ export async function findLicenseHandler(req: Request<ReadLicenseInput['params']
 
         return res.status(200).json({
             ok: true,
-            license
+            data: license
         });
     } catch (error: any) {
         logger.error(error);
@@ -114,7 +125,7 @@ export async function deleteLicenseHandler(
         return res.status(200).json({
             ok: true, 
             message: 'License deleted successfully',
-            license
+            data: license
         });
 
     } catch (error: any) {

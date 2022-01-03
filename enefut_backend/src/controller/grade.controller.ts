@@ -1,7 +1,20 @@
 import { Request, Response } from 'express';
-import { CreateGradeInput, DeleteGradeInput, ReadGradeInput, UpdateGradeInput } from '../schema/grade.schema';
-import { createGrade, deleteGrade, findGrade, findGrades, updateGrade } from '../services/grade.service';
 import logger from '../utils/logger';
+
+import { 
+    CreateGradeInput, 
+    DeleteGradeInput, 
+    ReadGradeInput, 
+    UpdateGradeInput 
+} from '../schema/grade.schema';
+
+import { 
+    createGrade, 
+    deleteGrade, 
+    findGrade, 
+    findGrades, 
+    updateGrade 
+} from '../services/grade.service';
 
 export async function createGradeHandler(req: Request<{}, {}, CreateGradeInput["body"]>, res: Response){
     try {
@@ -10,7 +23,7 @@ export async function createGradeHandler(req: Request<{}, {}, CreateGradeInput["
         return res.status(201).json({
             ok: true,
             message: 'Grade created succesfully',
-            grade
+            data: grade
         });
 
     } catch (error : any) {
@@ -27,7 +40,7 @@ export async function findGradesHandler(req: Request, res: Response){
         const grades = await findGrades();
         return res.status(200).json({
             ok: true,
-            grades
+            data: grades
         });
     } catch (error: any) {
         logger.error(error);
@@ -53,7 +66,7 @@ export async function findGradeHandler(req: Request<ReadGradeInput['params']>, r
 
         return res.status(200).json({
             ok: true,
-            grade
+            data: grade
         });
     } catch (error: any) {
         logger.error(error);
@@ -115,7 +128,7 @@ export async function deleteGradeHandler(
         return res.status(200).json({
             ok: true, 
             message: 'Grade deleted successfully',
-            grade
+            data: grade
         });
 
     } catch (error: any) {

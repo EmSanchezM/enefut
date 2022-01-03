@@ -8,6 +8,7 @@ export interface LicenseDocument extends mongoose.Document {
     cost: number;
     language: string;
     type: string;
+    isActive: boolean;
     createdAt: Date;
     updatedAt: Date;  
 }
@@ -19,7 +20,8 @@ const licenseSchema = new mongoose.Schema({
     duration: { type: Number },
     cost: { type: Number },
     language: { type: String },
-    type: { type: String }
+    type: { type: String },
+    isActive: { type: Boolean, default: true }
 },{
     timestamps: true,
     versionKey: false

@@ -7,6 +7,7 @@ export interface ClassDocument extends mongoose.Document {
     language: string;
     modality: string;
     type: string;
+    isActive: boolean;
     createdAt: Date;
     updatedAt: Date;  
 }
@@ -17,7 +18,8 @@ const classSchema = new mongoose.Schema({
     duration: { type: Number },
     language: { type: String },
     modality: { type: String },
-    type: { type: String }
+    type: { type: String },
+    isActive: { type: Boolean, default: true }
 },{
     timestamps: true,
     versionKey: false

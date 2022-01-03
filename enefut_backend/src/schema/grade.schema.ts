@@ -3,7 +3,7 @@ import { number, object, string, TypeOf } from "zod";
 const payload = {
     body: object({
         
-        acumulative: number({
+        cumulative: number({
             required_error: 'Acumulative is required'
         }).min(0, { message: 'Only positive numbers'}),
 
@@ -36,8 +36,8 @@ const payload = {
 const updatePayload = {
     body: object({
         
-        acumulative: number({
-            invalid_type_error: 'Acumulative must be a string'
+        cumulative: number({
+            invalid_type_error: 'Cumulative must be a string'
         })
         .min(0, { message: 'Only positive numbers'})
         .optional(),
@@ -69,7 +69,7 @@ const updatePayload = {
         .optional(),
 
         type: string({
-            required_error: 'Type is required'
+            invalid_type_error: 'Type is required'
         })
         .min(2, { message: 'Must be 2 or more characters long'})
         .optional()

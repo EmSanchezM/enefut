@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import FeatherIcon from 'feather-icons-react';
 import {
   Card,
@@ -17,6 +18,7 @@ import {
 
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
+import { fetchLicenses } from '../../redux/license/Action';
 
 const columns = [
   { id: 'pname', label: 'Licencia', minWidth: 170 },
@@ -33,49 +35,6 @@ const columns = [
   },
 ];
 
-const rows = [
-  {
-    id: 1,
-    name: 'Mike Twith',
-    letter: 'A',
-    description: 'good',
-    duration: '2021-12-02',
-    cost: 1500,
-    languague: 'Español',
-    type: 'Entrenador'
-  },
-  {
-    id: 2,
-    name: 'Mike Twith',
-    letter: 'B',
-    description: 'good',
-    duration: '2021-12-02',
-    cost: 2500,
-    languague: 'Español',
-    type: 'Entrenador'
-  },
-  {
-    id: 3,
-    name: 'Mike Twith',
-    letter: 'C',
-    description: 'good',
-    duration: '2021-12-02',
-    cost: 3500,
-    languague: 'Español',
-    type: 'Entrenador'
-  },
-  {
-    id: 4,
-    name: 'Mike Twith',
-    letter: 'D',
-    description: 'good',
-    duration: '2021-12-02',
-    cost: 4500,
-    languague: 'Español',
-    type: 'Entrenador'
-  },
-];
-
 const BCrumb = [
   {
     to: '/',
@@ -88,6 +47,13 @@ const BCrumb = [
 
 const LicenciaTable = () => {
   const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+
+  const dispatch = useDispatch();
+  const { licenses } = useSelector(state => state.licenseReducer);
+
+  useEffect(() => {
+    dispatch( fetchLicenses() );
+  }, [dispatch]);
 
   return (
     <PageContainer title="Licencias" description="Tipos de Licencias">
@@ -128,11 +94,11 @@ const LicenciaTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => {
+                {licenses.map((license) => {
                   return (
-                    <TableRow hover key={row.id}>
+                    <TableRow hover key={license._id}>
                       <TableCell>
-                        <Typography variant="h5">{row.name}</Typography>
+                        <Typography variant="h5">{license.name}</Typography>
                       </TableCell>
                       <TableCell>
                         <Typography
@@ -141,23 +107,23 @@ const LicenciaTable = () => {
                             mb: 1,
                           }}
                         >
-                          {Capitalize(row.letter)}
+                          {Capitalize(license.letter)}
                         </Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.description}</Typography>
+                        <Typography variant="h5">{license.description}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.duration}</Typography>
+                        <Typography variant="h5">{license.duration}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.cost}</Typography>
+                        <Typography variant="h5">{license.cost}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.languague}</Typography>
+                        <Typography variant="h5">{license.languague}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{row.type}</Typography>
+                        <Typography variant="h5">{license.type}</Typography>
                       </TableCell>
                       <TableCell>
                         <IconButton>

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import logger from '../utils/logger';
+import { nanoid } from "nanoid";
 
 import { 
     createStudent, 
@@ -18,11 +19,19 @@ import {
 
 export async function createStudentHandler(req: Request<{}, {}, CreateStudentInput["body"]>, res: Response){
     try {
-        const student = await createStudent(req.body);
+        
+        const studentSave = {
+            ...req.body,
+            code: 'STUDENT-'+ nanoid(),
+            rol: 'STUDENT',
+            isActive: true,
+        }
+
+        const student = await createStudent(studentSave);
         return res.status(201).json({
             ok: true,
             message: 'Student created succesfully',
-            student
+            data: student
         });
     } catch (error : any) {
         logger.error(error);
@@ -38,7 +47,7 @@ export async function findStudentsHandler(req: Request, res: Response){
         const students = await findStudents();
         return res.status(200).json({
             ok: true,
-            students
+            data: students
         });
     } catch (error: any) {
         logger.error(error);
@@ -64,7 +73,7 @@ export async function findStudentHandler(req: Request<ReadStudentInput['params']
 
         return res.status(200).json({
             ok: true,
-            student
+            data: student
         });
     } catch (error: any) {
         logger.error(error);
@@ -126,7 +135,7 @@ export async function deleteStudentHandler(
         return res.status(200).json({
             ok: true, 
             message: 'Teacher deleted successfully',
-            student
+            data: student
         });
 
     } catch (error: any) {

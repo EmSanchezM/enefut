@@ -96,8 +96,54 @@ import {
     getGradeSchema, 
     updateGradeSchema 
 } from './schema/grade.schema';
-import { createNoticeHandler, deleteNoticeHandler, findNoticeHandler, findNoticesHandler, updateNoticeHandler } from './controller/notice.controller';
-import { createNoticeSchema, deleteNoticeSchema, getNoticeSchema, updateNoticeSchema } from './schema/notice.schema';
+
+//Notices
+import { 
+    createNoticeHandler, 
+    deleteNoticeHandler, 
+    findNoticeHandler, 
+    findNoticesHandler, 
+    updateNoticeHandler 
+} from './controller/notice.controller';
+
+import { 
+    createNoticeSchema, 
+    deleteNoticeSchema, 
+    getNoticeSchema, 
+    updateNoticeSchema 
+} from './schema/notice.schema';
+
+//Attendances
+import { 
+    createAttendanceHandler, 
+    deleteAttendanceHandler, 
+    findAttendanceHandler, 
+    findAttendancesHandler, 
+    updateAttendanceHandler
+} from './controller/attendance.controller';
+
+import { 
+    createAttendanceSchema, 
+    deleteAttendanceSchema, 
+    getAttendanceSchema, 
+    updateAttendanceSchema
+} from './schema/attendance.schema';
+
+//Enrollments
+import { 
+    createEnrollmentHandler, 
+    deleteEnrollmentHandler, 
+    findEnrollmentHandler, 
+    findEnrollmentsHandler, 
+    updateEnrollmentHandler 
+} from './controller/enrollment.controller';
+
+import { 
+    createEnrollmentSchema, 
+    deleteEnrollmentSchema, 
+    getEnrollmentSchema, 
+    updateEnrollmentSchema 
+} from './schema/enrollment.schema';
 
 function routes(app: Express){
     // Students routes
@@ -148,6 +194,20 @@ function routes(app: Express){
     app.post('/api/notices', validateResource(createNoticeSchema), createNoticeHandler);
     app.put('/api/notices/:noticeId', validateResource(updateNoticeSchema), updateNoticeHandler);
     app.delete('/api/notices/:noticeId', validateResource(deleteNoticeSchema), deleteNoticeHandler);
+
+    // Attendances routes
+    app.get('/api/attendances', findAttendancesHandler);
+    app.get('/api/attendances/:attendanceId', validateResource(getAttendanceSchema), findAttendanceHandler);
+    app.post('/api/attendances', validateResource(createAttendanceSchema), createAttendanceHandler);
+    app.put('/api/attendances/:attendanceId', validateResource(updateAttendanceSchema), updateAttendanceHandler);
+    app.delete('/api/attendances/:attendanceId', validateResource(deleteAttendanceSchema), deleteAttendanceHandler);
+
+    // Enrollments routes
+    app.get('/api/enrollments', findEnrollmentsHandler);
+    app.get('/api/enrollments/:enrollmentId', validateResource(getEnrollmentSchema), findEnrollmentHandler);
+    app.post('/api/enrollments', validateResource(createEnrollmentSchema), createEnrollmentHandler);
+    app.put('/api/enrollments/:enrollmentId', validateResource(updateEnrollmentSchema), updateEnrollmentHandler);
+    app.delete('/api/enrollments/:enrollmentId', validateResource(deleteEnrollmentSchema), deleteEnrollmentHandler);
     
 }
 

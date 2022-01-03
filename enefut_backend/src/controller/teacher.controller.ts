@@ -1,17 +1,37 @@
 import { Request, Response } from 'express';
 import logger from '../utils/logger';
+import { nanoid } from "nanoid";
 
-import { CreateTeacherInput, DeleteTeacherInput, ReadTeacherInput, UpdateTeacherInput } from '../schema/teacher.schema';
-import { createTeacher, deleteTeacher, findTeacher, findTeachers, updateTeacher } from '../services/teacher.service';
-import { omit } from 'lodash';
+import { 
+    CreateTeacherInput, 
+    DeleteTeacherInput, 
+    ReadTeacherInput, 
+    UpdateTeacherInput 
+} from '../schema/teacher.schema';
+
+import { 
+    createTeacher, 
+    deleteTeacher, 
+    findTeacher, 
+    findTeachers, 
+    updateTeacher 
+} from '../services/teacher.service';
 
 export async function createTeacherHandler(req: Request<{}, {}, CreateTeacherInput["body"]>, res: Response){
     try {
-        const teacher = await createTeacher(req.body);
+        const teacherSave = {
+            ...req.body,
+            code: 'TEACHER-'+ nanoid(),
+            rol: 'TEACHER',
+            isActive: true,
+        }
+
+        const teacher = await createTeacher(teacherSave);
+
         return res.status(201).json({
             ok: true,
             message: 'Teacher created succesfully',
-            teacher
+            data: teacher
         });
     } catch (error : any) {
         logger.error(error);
@@ -27,7 +47,7 @@ export async function findTeachersHandler(req: Request, res: Response){
         const teachers = await findTeachers();
         return res.status(200).json({
             ok: true,
-            teachers
+            data: teachers
         });
     } catch (error: any) {
         logger.error(error);
@@ -53,7 +73,7 @@ export async function findTeacherHandler(req: Request<ReadTeacherInput['params']
 
         return res.status(200).json({
             ok: true,
-            teacher
+            data: teacher
         });
     } catch (error: any) {
         logger.error(error);
@@ -115,7 +135,7 @@ export async function deleteTeacherHandler(
         return res.status(200).json({
             ok: true, 
             message: 'Teacher deleted successfully',
-            teacher
+            data: teacher
         });
 
     } catch (error: any) {

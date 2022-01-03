@@ -9,6 +9,7 @@ export interface NoticeDocument extends mongoose.Document {
     dateInit: Date | string;
     dateEnd: Date | string;
     type: string;
+    isActive: boolean;
     license: LicenseDocument['_id'];
     createdAt: Date;
     updatedAt: Date;  
@@ -24,7 +25,8 @@ const noticeSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'License'
     },
-    type: { type: String }
+    type: { type: String },
+    isActive: { type: Boolean, default: true }
 },{
     timestamps: true,
     versionKey: false

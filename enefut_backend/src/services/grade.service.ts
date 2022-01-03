@@ -12,8 +12,8 @@ export async function createGrade(input: DocumentDefinition<Omit<GradeDocument, 
 export async function findGrades(){
     try {
         const grades = await Grade.find()
-                                        .populate('student', '-password')
-                                        .populate('class');
+                                  .populate('student', '-password')
+                                  .populate('class');
         return grades;
     } catch (error: any) {
         throw new Error(error);

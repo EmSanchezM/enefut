@@ -18,12 +18,18 @@ import {
 
 export async function createActivityHandler(req: Request<{}, {}, CreateActivityInput["body"]>, res: Response){
     try {
-        const activity = await createActivity(req.body);
+        
+        const activitySave = {
+            ...req.body,
+            isActive: true 
+        }
+
+        const activity = await createActivity(activitySave);
 
         return res.status(201).json({
             ok: true,
             message: 'Activity created succesfully',
-            activity
+            data: activity
         });
 
     } catch (error : any) {
@@ -40,7 +46,7 @@ export async function findActivitiesHandler(req: Request, res: Response){
         const activities = await findActivities();
         return res.status(200).json({
             ok: true,
-            activities
+            data: activities
         });
     } catch (error: any) {
         logger.error(error);
@@ -66,7 +72,7 @@ export async function findActivityHandler(req: Request<ReadActivityInput['params
 
         return res.status(200).json({
             ok: true,
-            activity
+            data: activity
         });
     } catch (error: any) {
         logger.error(error);
@@ -128,7 +134,7 @@ export async function deleteActivityHandler(
         return res.status(200).json({
             ok: true, 
             message: 'Activity deleted successfully',
-            activity
+            data: activity
         });
 
     } catch (error: any) {
