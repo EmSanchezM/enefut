@@ -8,6 +8,7 @@ const RootReducers = combineReducers({
   CustomizerReducer,
   chatReducer,
   notesReducer,
+  emailReducer,
 });
 
 export default RootReducers;
