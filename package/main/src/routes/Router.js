@@ -126,26 +126,33 @@ const Router = [
 
       { path: '/clases', element: <ClasesTable /> },
       { path: '/clases/nueva', element: <FormClase /> },
+      { path: '/clases/:classId/editar', element: <FormClase /> },
 
-      { path: '/grados', element: <GradoTable /> },
-      { path: '/grados/nuevo', element: <FormGrado /> },
+      { path: '/calificaciones', element: <GradoTable /> },
+      { path: '/calificaciones/nueva', element: <FormGrado /> },
+      { path: '/calificaciones/:gradeId/editar', element: <FormGrado /> },
 
       { path: '/avisos', element: <AvisoTable /> },
       { path: '/avisos/nuevo', element: <FormAviso /> },
+      { path: '/avisos/:noticeId/editar', element: <FormAviso /> },
 
       { path: '/inscripciones', element: <InscripcionTable /> },
       { path: '/inscripciones/nueva', element: <FormInscripcion /> },
+      { path: '/inscripciones/:enrollmentId/editar', element: <FormInscripcion /> },
 
       { path: '/licencias', element: <LicenciaTable /> },
       { path: '/licencias/nueva', element: <FormLicencia /> },
+      { path: '/licencias/:licenseId/editar', element: <FormLicencia /> },
 
       { path: '/pagos', element: <PagosTable /> },
 
       { path: '/instructores', element: <InstructorTable /> },
       { path: '/instructores/nuevo', element: <FormInstructor /> },
+      { path: '/instructores/:teacherId/editar', element: <FormInstructor /> },
 
       { path: '/estudiantes', element: <EstudianteTable /> },
       { path: '/estudiantes/nuevo', element: <FormEstudiante /> },
+      { path: '/estudiantes/:studentId/editar', element: <FormEstudiante /> },
      
       { path: '/form-elements/autocomplete', element: <ExAutoComplete /> },
       { path: '/form-elements/button', element: <ExButton /> },

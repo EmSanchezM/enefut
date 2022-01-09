@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import FeatherIcon from 'feather-icons-react';
+
 import {
   Card,
   CardContent,
@@ -16,10 +18,10 @@ import {
   Button,
 } from '@mui/material';
 
+import Axios from '../../config/axios'; 
+
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
-
-import { fetchClasses } from '../../redux/classe/Action';
 
 const columns = [
   { id: 'pname', label: 'Clase', minWidth: 170 },
@@ -48,12 +50,25 @@ const BCrumb = [
 const ClasesTable = () => {
   const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
-  const dispatch = useDispatch();
-  const { classes } = useSelector(state => state.classReducer);
+  const [clases, setClases] = useState([]);
 
   useEffect(() => {
-    dispatch( fetchClasses() );
-  }, [dispatch]);
+    (
+      async () => {
+        const { data } = await Axios.get('classes');
+        setClases(data.data);
+      }
+    )();
+  }, []);
+  
+  const handleDelete = async (classId) => {
+    // eslint-disable-next-line
+    if(window.confirm('Estas seguro de eliminarla?')){
+      await Axios.delete(`classes/${classId}`);
+      toast.success('Clase eliminada exitosamente');
+      setClases( clases.filter(clase => clase._id !== classId));
+    }
+  }
 
   return (
     <PageContainer title="Clases" description="Clases de estudiantes">
@@ -77,6 +92,7 @@ const ClasesTable = () => {
                 Agregar
               </Button>
             </Box>
+            <ToastContainer autoClose={3000} />
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -94,9 +110,9 @@ const ClasesTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {classes.map((classe) => {
+                {clases.map((clase) => {
                   return (
-                    <TableRow hover key={classe._id}>
+                    <TableRow hover key={clase._id}>
                       <TableCell>
                         <Typography
                           variant="h6"
@@ -104,7 +120,7 @@ const ClasesTable = () => {
                             mb: 1,
                           }}
                         >
-                          {Capitalize(classe.name)}
+                          {Capitalize(clase.name)}
                         </Typography>
                       </TableCell>
                       <TableCell
@@ -118,24 +134,24 @@ const ClasesTable = () => {
                             mb: 1,
                           }}
                         >
-                          {Capitalize(classe.description)}
+                          {Capitalize(clase.description)}
                         </Typography>
                         
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{new Date(classe.duration).toLocaleTimeString()} hours</Typography>
+                        <Typography variant="h5">{clase.duration} horas</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{classe.language}</Typography>
+                        <Typography variant="h5">{clase.language}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{classe.modality}</Typography>
+                        <Typography variant="h5">{clase.modality}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{classe.type}</Typography>
+                        <Typography variant="h5">{clase.type}</Typography>
                       </TableCell>
                       <TableCell>
-                        <IconButton>
+                        <IconButton href={`/clases/${clase._id}/editar`}>
                           <FeatherIcon
                             icon="edit"
                             width="18"
@@ -145,7 +161,7 @@ const ClasesTable = () => {
                             }}
                           />
                         </IconButton>
-                        <IconButton>
+                        <IconButton onClick={() => handleDelete(clase._id)}>
                           <FeatherIcon
                             icon="trash"
                             width="18"

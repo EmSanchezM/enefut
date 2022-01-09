@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import FeatherIcon from 'feather-icons-react';
 import {
   Card,
@@ -16,9 +17,10 @@ import {
   Button,
 } from '@mui/material';
 
+import Axios from '../../config/axios'; 
+
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
-import { fetchAttendances } from '../../redux/attendance/Action';
 
 const columns = [
   { id: 'student', label: 'Estudiante', minWidth: 170 },
@@ -45,13 +47,26 @@ const BCrumb = [
 const InscripcionTable = () => {
   const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
-  const dispatch = useDispatch();
-  const { attendances } = useSelector(state => state.attendanceReducer);
+  const [inscripciones, setInscripciones] = useState([]);
 
   useEffect(() => {
-    dispatch( fetchAttendances() );
-  }, [dispatch]);
-
+    (
+      async () => {
+        const { data } = await Axios.get('enrollments');
+        setInscripciones(data.data);
+      }
+    )();
+  }, []);
+  
+  const handleDelete = async (enrollmentId) => {
+    // eslint-disable-next-line
+    if(window.confirm('Estas seguro de eliminarla?')){
+      await Axios.delete(`enrollments/${enrollmentId}`);
+      toast.success('Inscripcion eliminada exitosamente');
+      setInscripciones( inscripciones.filter(inscripcion => inscripcion._id !== enrollmentId));
+    }
+  }
+  
   return (
     <PageContainer title="Inscripciones" description="Incripciones de Estudiantes">
       {/* breadcrumb */}
@@ -74,6 +89,7 @@ const InscripcionTable = () => {
                 Agregar
               </Button>
             </Box>
+            <ToastContainer autoClose={3000} />
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -91,23 +107,23 @@ const InscripcionTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {attendances.map((attendance) => {
+                {inscripciones.map((enrollment) => {
                   return (
-                    <TableRow hover key={attendance._id}>
+                    <TableRow hover key={enrollment._id}>
                       <TableCell>
-                        <Typography variant="h5">{Capitalize(attendance.student.name)} {Capitalize(attendance.student.lastName)}</Typography>
+                        <Typography variant="h5">{Capitalize(enrollment.student.name)} {Capitalize(enrollment.student.lastName)}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{attendance.class.name}</Typography>
+                        <Typography variant="h5">{enrollment.license.name}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{attendance.section}</Typography>
+                        <Typography variant="h5">{enrollment.section}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{attendance.type}</Typography>
+                        <Typography variant="h5">{enrollment.type}</Typography>
                       </TableCell>
                       <TableCell>
-                        <IconButton>
+                        <IconButton href={`/inscripciones/${enrollment._id}/editar`}>
                           <FeatherIcon
                             icon="edit"
                             width="18"
@@ -117,7 +133,7 @@ const InscripcionTable = () => {
                             }}
                           />
                         </IconButton>
-                        <IconButton>
+                        <IconButton onClick={() => handleDelete(enrollment._id)}>
                           <FeatherIcon
                             icon="trash"
                             width="18"

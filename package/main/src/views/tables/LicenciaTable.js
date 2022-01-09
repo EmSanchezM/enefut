@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import FeatherIcon from 'feather-icons-react';
 import {
   Card,
@@ -16,9 +17,10 @@ import {
   Button,
 } from '@mui/material';
 
+import Axios from '../../config/axios'; 
+
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
-import { fetchLicenses } from '../../redux/license/Action';
 
 const columns = [
   { id: 'pname', label: 'Licencia', minWidth: 170 },
@@ -48,12 +50,25 @@ const BCrumb = [
 const LicenciaTable = () => {
   const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
-  const dispatch = useDispatch();
-  const { licenses } = useSelector(state => state.licenseReducer);
+  const [licencias, setLicencias] = useState([]);
 
   useEffect(() => {
-    dispatch( fetchLicenses() );
-  }, [dispatch]);
+    (
+      async () => {
+        const { data } = await Axios.get('licenses');
+        setLicencias(data.data);
+      }
+    )();
+  }, []);
+
+  const handleDelete = async (licenseId) => {
+    // eslint-disable-next-line
+    if(window.confirm('Estas seguro de eliminarla?')){
+      await Axios.delete(`licenses/${licenseId}`);
+      toast.success('Licencia eliminada exitosamente');
+      setLicencias( licencias.filter(licencia => licencia._id !== licenseId));
+    }
+  }
 
   return (
     <PageContainer title="Licencias" description="Tipos de Licencias">
@@ -77,6 +92,7 @@ const LicenciaTable = () => {
                 Agregar
               </Button>
             </Box>
+            <ToastContainer autoClose={3000} />
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -94,7 +110,7 @@ const LicenciaTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {licenses.map((license) => {
+                {licencias.map((license) => {
                   return (
                     <TableRow hover key={license._id}>
                       <TableCell>
@@ -126,7 +142,7 @@ const LicenciaTable = () => {
                         <Typography variant="h5">{license.type}</Typography>
                       </TableCell>
                       <TableCell>
-                        <IconButton>
+                        <IconButton href={`/licencias/${license._id}/editar`}>
                           <FeatherIcon
                             icon="edit"
                             width="18"
@@ -136,7 +152,7 @@ const LicenciaTable = () => {
                             }}
                           />
                         </IconButton>
-                        <IconButton>
+                        <IconButton onClick={()=> handleDelete(license._id)}>
                           <FeatherIcon
                             icon="trash"
                             width="18"

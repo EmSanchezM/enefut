@@ -1,11 +1,10 @@
-import { number, object, string, TypeOf } from "zod";
+import { object, string, TypeOf } from "zod";
 
 const payload = {
     body: object({
-        
         section: string({
             required_error: 'Section is required'
-        }).min(2, { message: 'Must be 2 or more characters long'}),
+        }).min(1, { message: 'Must be 2 or more characters long'}),
 
         student: string({
             required_error: 'Student ID is required'
@@ -20,7 +19,7 @@ const payload = {
         }).min(2, { message: 'Must be 2 or more characters long'}),
 
         type: string({
-            required_error: 'Type teacher is required'
+            required_error: 'Type enrollment is required'
         }).min(2, { message: 'Must be 2 or more characters long'})
     })
 };
@@ -30,7 +29,7 @@ const updatePayload = {
         section: string({
             invalid_type_error: 'Title must be a string'
         })
-        .min(2, { message: 'Must be 2 or more characters long'})
+        .min(1, { message: 'Must be 2 or more characters long'})
         .optional(),
     
         student: string({

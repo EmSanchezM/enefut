@@ -1,5 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import FeatherIcon from 'feather-icons-react';
+
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import {
   Card,
   CardContent,
@@ -15,12 +19,10 @@ import {
   Button,
 } from '@mui/material';
 
-import { useDispatch, useSelector } from 'react-redux';
-
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
 
-import { fetchStudents } from '../../redux/student/Action';
+import Axios from '../../config/axios';
 
 const columns = [
   { id: 'pname', label: 'Nombre', minWidth: 170 },
@@ -49,12 +51,25 @@ const BCrumb = [
 ];
 
 const EstudianteTable = () => {
-  const dispatch = useDispatch();
-  const { students } = useSelector(state => state.studentReducer);
+  const [students, setStudents] = useState([]);
 
   useEffect(() => {
-    dispatch( fetchStudents() );
-  }, [dispatch]);
+    (
+      async () => {
+        const { data } = await Axios.get('students');
+        setStudents(data.data);
+      }
+    )();
+  }, []);
+  
+  const handleDelete = async (studentId) => {
+    // eslint-disable-next-line
+    if(window.confirm('Estas seguro de eliminarlo?')){
+      await Axios.delete(`students/${studentId}`);
+      toast.success('Estudiante eliminado exitosamente');
+      setStudents( students.filter(student => student._id !== studentId));
+    }
+  }
 
   return (
     <PageContainer title="Estudiantes" description="Estudiantes">
@@ -78,11 +93,12 @@ const EstudianteTable = () => {
                 Agregar
               </Button>
             </Box>
+            <ToastContainer autoClose={3000} />
             
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
-                  {columns.map((column) => (
+                  { columns.map((column) => (
                     <TableCell
                       key={column.id}
                       align={column.align}
@@ -137,7 +153,7 @@ const EstudianteTable = () => {
                         <Typography variant="h5">{student.type}</Typography>
                       </TableCell>
                       <TableCell>
-                        <IconButton>
+                        <IconButton href={`/estudiantes/${student._id}/editar`}>
                           <FeatherIcon
                             icon="edit"
                             width="18"
@@ -147,7 +163,7 @@ const EstudianteTable = () => {
                             }}
                           />
                         </IconButton>
-                        <IconButton>
+                        <IconButton onClick={()=> handleDelete(student._id)}>
                           <FeatherIcon
                             icon="trash"
                             width="18"

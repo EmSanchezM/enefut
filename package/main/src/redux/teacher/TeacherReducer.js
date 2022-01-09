@@ -9,7 +9,7 @@ import {
   
   const INIT_STATE = {
     teachers: [],
-    teacherContent: 1,
+    teacherContent: null,
     teacherSearch: '',
   };
   
@@ -24,7 +24,7 @@ import {
       case SELECTED_TEACHERS:
         return {
           ...state,
-          teacherContent: action.id,
+          teacherContent: action.payload,
         };
   
       case SEARCH_TEACHERS:
@@ -32,27 +32,27 @@ import {
           ...state,
           teacherSearch: action.searchTerm,
         };
-  
-      case UPDATE_TEACHER:
-        return {
-          ...state,
-          teachers: state.teachers.map((teacher) =>
-            teacher.id === action.id ? action : teacher,
-          ),
-        };
-      case DELETE_TEACHER:
-        return {
-          ...state,
-          teachers: state.teachers.filter((teacher) =>
-            teacher.id !== action.payload,
-          ),
-        };
+      
       case ADD_TEACHER:
         return {
           ...state,
           teachers: [...state.teachers, action.payload],
         };
-  
+    
+      case UPDATE_TEACHER:
+        return {
+          ...state,
+          teachers: state.teachers.map(teacher =>teacher._id === action.payload._id ? action.payload : teacher),
+        };
+
+      case DELETE_TEACHER:
+        return {
+          ...state,
+          teachers: state.teachers.filter((teacher) =>
+            teacher._id !== action.payload,
+          ),
+        };
+      
       default:
         return state;
     }

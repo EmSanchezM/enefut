@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import FeatherIcon from 'feather-icons-react';
 import {
   Card,
@@ -18,7 +20,7 @@ import {
 
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
-import { fetchGrades } from '../../redux/grade/Action';
+import Axios from '../../config/axios'; 
 
 const columns = [
   { id: 'student', label: 'Estudiante', minWidth: 170 },
@@ -46,12 +48,25 @@ const BCrumb = [
 
 const GradoTable = () => {
   
-  const dispatch = useDispatch();
-  const { grades } = useSelector(state => state.gradeReducer);
+  const [grados, setGrados] = useState([]);
 
   useEffect(() => {
-    dispatch( fetchGrades() );
-  }, [dispatch]);
+    (
+      async () => {
+        const { data } = await Axios.get('grades');
+        setGrados(data.data);
+      }
+    )();
+  }, []);
+
+  const handleDelete = async (gradoId) => {
+    // eslint-disable-next-line
+    if(window.confirm('Estas seguro de eliminarla?')){
+      await Axios.delete(`grades/${gradoId}`);
+      toast.success('Grado eliminado exitosamente');
+      setGrados( grados.filter(grado => grado._id !== gradoId));
+    }
+  }
 
   return (
     <PageContainer title="Grados" description="Grados">
@@ -69,12 +84,13 @@ const GradoTable = () => {
               <Button 
                 variant="outlined" 
                 color="primary" 
-                href="/grados/nuevo"
+                href="/calificaciones/nueva"
                 startIcon={<FeatherIcon icon="plus" width="15" height="15" />}
               >
                 Agregar
               </Button>
             </Box>
+            <ToastContainer autoClose={3000} />
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -92,29 +108,29 @@ const GradoTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {grades.map((grade) => {
+                {grados.map((grado) => {
                   return (
-                    <TableRow hover key={grade._id}>
+                    <TableRow hover key={grado._id}>
                       <TableCell>
-                        <Typography variant="h5">{grade.student.name} {grade.student.lastName}</Typography>
+                        <Typography variant="h5">{grado.student.name} {grado.student.lastName}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{grade.class.name}</Typography>
+                        <Typography variant="h5">{grado.class.name}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{grade.average}</Typography>
+                        <Typography variant="h5">{grado.average}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{grade.acumulative}</Typography>
+                        <Typography variant="h5">{grado.cumulative}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{grade.quiz}</Typography>
+                        <Typography variant="h5">{grado.quiz}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{grade.type}</Typography>
+                        <Typography variant="h5">{grado.type}</Typography>
                       </TableCell>
                       <TableCell>
-                        <IconButton>
+                        <IconButton href={`/calificaciones/${grado._id}/editar`}>
                           <FeatherIcon
                             icon="edit"
                             width="18"
@@ -124,7 +140,7 @@ const GradoTable = () => {
                             }}
                           />
                         </IconButton>
-                        <IconButton>
+                        <IconButton onClick={()=> handleDelete(grado._id)}>
                           <FeatherIcon
                             icon="trash"
                             width="18"

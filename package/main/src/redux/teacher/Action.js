@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import Axios from '../../config/axios'; 
 
 import {
@@ -13,7 +14,7 @@ export const fetchTeachers = () => {
     return async(dispatch) => {
         try {
           const response = await Axios.get('teachers');
-          console.log('axios', response.data.data)
+
           dispatch( {
             type: FETCH_TEACHERS_SUCCESS,
             teachers: response.data.data 
@@ -35,6 +36,39 @@ export const teacherSearch = (searchTerm) => ({
   searchTerm,
 });
 
+export const addTeacher = (teacher) => {
+  return async(dispatch) => {
+    try {
+      const response = await Axios.post('teachers', teacher);
+
+      if(response.data.ok){
+        dispatch({
+          type: ADD_TEACHER,
+          payload: response.data.data 
+        });
+  
+        toast.success('Instructor agregado exitosamente!');
+      }
+
+    } catch (error) {
+      console.log('ERROR', error);
+      toast.error('ERROR '. error.message);
+    }
+  }
+};
+
+export const updateTeacher = (teacher, teacherId) => (dispatch) => {
+  Axios
+  .put(`teachers/${teacherId}`, teacher)
+  .then((response) => {
+    dispatch({
+      type: UPDATE_TEACHER,
+      payload: response.data
+    });
+  })
+  .catch((err) => err);
+};
+
 export const deleteTeacher = (teacherId) => (dispatch) => {
   Axios
     .delete(`teachers/${teacherId}`)
@@ -47,26 +81,4 @@ export const deleteTeacher = (teacherId) => (dispatch) => {
     .catch((err) => err);
 };
 
-export const updateTeacher = (teacher, teacherId) => (dispatch) => {
-    Axios
-    .put(`teachers/${teacherId}`, teacher)
-    .then((response) => {
-      dispatch({
-        type: UPDATE_TEACHER,
-        payload: response.data
-      });
-    })
-    .catch((err) => err);
-};
 
-export const addTeacher = (teacher) => (dispatch)=> {
-  Axios
-    .post('teachers', teacher)
-    .then((response) => {
-      dispatch({
-        type: ADD_TEACHER,
-        payload: response.data,
-      });
-    })
-    .catch((err) => err); 
-};

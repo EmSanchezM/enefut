@@ -26,9 +26,9 @@ const Menuitems = [
     href: '/clases',
   },
   {
-    title: 'Grados',
+    title: 'Calificaciones',
     icon: 'book',
-    href: '/grados',
+    href: '/calificaciones',
   },
   {
     title: 'Practicas',

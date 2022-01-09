@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import FeatherIcon from 'feather-icons-react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import {
   Card,
   CardContent,
@@ -16,10 +18,10 @@ import {
   Button,
 } from '@mui/material';
 
+import Axios from '../../config/axios'; 
+
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
-
-import { fetchTeachers } from '../../redux/teacher/Action';
 
 const columns = [
   { id: 'pname', label: 'Instructor', minWidth: 170 },
@@ -51,13 +53,25 @@ const BCrumb = [
 const InstructorTable = () => {
   const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
-  const dispatch = useDispatch();
-
-  const { teachers } = useSelector(state => state.teacherReducer);
+  const [teachers, setTeachers] = useState([]);
 
   useEffect(() => {
-    dispatch( fetchTeachers() );
-  }, [dispatch]);
+    (
+      async () => {
+        const { data } = await Axios.get('teachers');
+        setTeachers(data.data);
+      }
+    )();
+  }, []);
+  
+  const handleDelete = async (teacherId) => {
+    // eslint-disable-next-line
+    if(window.confirm('Estas seguro de eliminarlo?')){
+      await Axios.delete(`teachers/${teacherId}`);
+      toast.success('Clase eliminada exitosamente');
+      setTeachers( teachers.filter(teacher => teacher._id !== teacherId));
+    }
+  }
 
   return (
     <PageContainer title="Instructores" description="Instructores">
@@ -81,7 +95,7 @@ const InstructorTable = () => {
                 Agregar
               </Button>
             </Box>
-            
+            <ToastContainer autoClose={3000} />
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -156,7 +170,7 @@ const InstructorTable = () => {
                         <Typography variant="h5">{teacher.type}</Typography>
                       </TableCell>
                       <TableCell>
-                        <IconButton>
+                        <IconButton href={`/instructores/${teacher._id}/editar`}>
                           <FeatherIcon
                             icon="edit"
                             width="18"
@@ -166,7 +180,7 @@ const InstructorTable = () => {
                             }}
                           />
                         </IconButton>
-                        <IconButton>
+                        <IconButton onClick={() => handleDelete(teacher._id)}>
                           <FeatherIcon
                             icon="trash"
                             width="18"

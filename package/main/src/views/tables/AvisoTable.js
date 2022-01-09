@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import FeatherIcon from 'feather-icons-react';
 import {
   Card,
@@ -16,9 +17,10 @@ import {
   Button,
 } from '@mui/material';
 
+import Axios from '../../config/axios'; 
+
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import PageContainer from '../../components/container/PageContainer';
-import { fetchNotices } from '../../redux/notices/Action';
 
 const columns = [
   { id: 'license', label: 'Licencia', minWidth: 170 },
@@ -26,7 +28,6 @@ const columns = [
   { id: 'title', label: 'Aviso', minWidth: 150 },
   { id: 'dateInit', label: 'Fecha de Inicio', minWidth: 150 },
   { id: 'dateEnd', label: 'Fecha de Finalizacion', minWidth: 150 },
-  { id: 'description', label: 'Descripcion', minWidth: 150 },
   { id: 'type', label: 'Tipo', minWidth: 150 },
   {
     id: 'action',
@@ -48,12 +49,25 @@ const BCrumb = [
 const AvisoTable = () => {
   const Capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
-  const dispatch = useDispatch();
-  const { notices } = useSelector(state => state.noticeReducer);
+  const [avisos, setAvisos] = useState([]);
 
   useEffect(() => {
-    dispatch( fetchNotices() );
-  }, [dispatch]);
+    (
+      async () => {
+        const { data } = await Axios.get('notices');
+        setAvisos(data.data);
+      }
+    )();
+  }, []);
+  
+  const handleDelete = async (attendanceId) => {
+    // eslint-disable-next-line
+    if(window.confirm('Estas seguro de eliminarlo?')){
+      await Axios.delete(`notices/${attendanceId}`);
+      toast.success('Aviso eliminado exitosamente');
+      setAvisos( avisos.filter(aviso => aviso._id !== attendanceId));
+    }
+  }
 
   return (
     <PageContainer title="Avisos" description="Avisos">
@@ -77,6 +91,7 @@ const AvisoTable = () => {
                 Agregar
               </Button>
             </Box>
+            <ToastContainer autoClose={3000} />
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -94,32 +109,32 @@ const AvisoTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {notices.map((notice) => {
+                {avisos.map((aviso) => {
                   return (
-                    <TableRow hover key={notice._id}>
+                    <TableRow hover key={aviso._id}>
                       <TableCell>
-                        <Typography variant="h5">{notice.license.name}</Typography>
+                        <Typography variant="h5">{aviso.license.name}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{notice.section}</Typography>
+                        <Typography variant="h5">{Capitalize(aviso.section)}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{Capitalize(notice.title)}</Typography>
+                        <Typography variant="h5">{(aviso.title)}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{new Date(notice.dateInit).toLocaleDateString() }</Typography>
+                        <Typography variant="h5">{aviso.description}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{new Date(notice.dateEnd).toLocaleDateString() }</Typography>
+                        <Typography variant="h5">{new Date(aviso.dateInit).toLocaleDateString() }</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{notice.description}</Typography>
+                        <Typography variant="h5">{new Date(aviso.dateEnd).toLocaleDateString() }</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="h5">{notice.type}</Typography>
+                        <Typography variant="h5">{aviso.type}</Typography>
                       </TableCell>
                       <TableCell>
-                        <IconButton>
+                        <IconButton href={`/avisos/${aviso._id}/editar`}>
                           <FeatherIcon
                             icon="edit"
                             width="18"
@@ -129,7 +144,7 @@ const AvisoTable = () => {
                             }}
                           />
                         </IconButton>
-                        <IconButton>
+                        <IconButton onClick={() => handleDelete(aviso._id)}>
                           <FeatherIcon
                             icon="trash"
                             width="18"
