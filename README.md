@@ -1,3 +1,1 @@
-# enefut
-
 ## Project School ENEFUT
